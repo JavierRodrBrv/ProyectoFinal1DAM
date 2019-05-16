@@ -19,6 +19,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Dimension;
 import java.awt.Color;
+import java.awt.Toolkit;
 
 public class ElegirTamaño extends JDialog {
 	private JTextField alto;
@@ -29,12 +30,13 @@ public class ElegirTamaño extends JDialog {
 	private JSlider sliderVerde;
 	private JSlider sliderAzul;
 	private JTextField valorHexa;
-	private JLabel lbl;
+	private JLabel lienzo;
 	public ElegirTamaño(Principal p) {
+		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\1DAM\\Documents\\GitHub\\ProyectoFinal1DAM\\imagenes\\icono2.jpg"));
 		
 		this.principal=p;
 		thisRef=this;
-		lbl=p.getLabel();
+		lienzo=p.getLabel();
 		
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{70, 79, 86, 257, 68, 146, 0};
@@ -54,32 +56,15 @@ public class ElegirTamaño extends JDialog {
 		valorHexa.setColumns(10);
 		
 		
-		JButton botonColor = new JButton("no se porqu\u00E9 se pone chico");
-		botonColor.setForeground(Color.WHITE);
-		botonColor.setSize(new Dimension(500, 500));
+		JButton botonColor = new JButton("boton color");
 		
 		GridBagConstraints gbc_botonColor = new GridBagConstraints();
 		gbc_botonColor.insets = new Insets(0, 0, 5, 5);
 		gbc_botonColor.gridx = 3;
 		gbc_botonColor.gridy = 0;
 		getContentPane().add(botonColor, gbc_botonColor);
+		
 		alto = new JTextField();
-		alto.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyTyped(KeyEvent arg0) {
-				switch(arg0.getKeyChar()) {
-				case KeyEvent.VK_ENTER:
-					System.out.println("Intro presionado");
-					
-					p.setImagen(new BufferedImage(Integer.parseInt
-							(ancho.getText()),Integer.parseInt
-							(alto.getText()),BufferedImage.TYPE_INT_RGB));
-					
-					thisRef.dispose();
-					break;
-				}
-			}
-		});
 		JLabel lblAlto = new JLabel("Alto");
 		GridBagConstraints gbc_lblAlto = new GridBagConstraints();
 		gbc_lblAlto.insets = new Insets(0, 0, 5, 5);
@@ -96,26 +81,6 @@ public class ElegirTamaño extends JDialog {
 		
 		
 		ancho = new JTextField();
-		ancho.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyTyped(KeyEvent arg0) {
-				
-				switch(arg0.getKeyChar()) {
-				case KeyEvent.VK_ENTER:
-					System.out.println("Intro presionado");
-					
-					p.setImagen(new BufferedImage(Integer.parseInt
-							(ancho.getText()),Integer.parseInt
-							(alto.getText()),BufferedImage.TYPE_INT_RGB));
-					
-					thisRef.dispose();
-					break;
-				}
-			}
-		});
-		
-		
-		
 		JLabel lblAncho = new JLabel("Ancho");
 		GridBagConstraints gbc_lblAncho = new GridBagConstraints();
 		gbc_lblAncho.insets = new Insets(0, 0, 5, 5);
@@ -144,7 +109,11 @@ public class ElegirTamaño extends JDialog {
 					
 					p.setImagen(new BufferedImage(Integer.parseInt
 							(ancho.getText()),Integer.parseInt
-							(alto.getText()),BufferedImage.TYPE_INT_RGB));
+							(alto.getText()),BufferedImage.TYPE_INT_RGB),new Color(sliderRojo.getValue(),sliderVerde.getValue(),sliderAzul.getValue()));
+
+
+					
+					
 					
 					thisRef.dispose();
 					break;
@@ -158,7 +127,7 @@ public class ElegirTamaño extends JDialog {
 				
 				p.setImagen(new BufferedImage(Integer.parseInt
 						(ancho.getText()),Integer.parseInt
-						(alto.getText()),BufferedImage.TYPE_INT_RGB));
+						(alto.getText()),BufferedImage.TYPE_INT_RGB),new Color(sliderRojo.getValue(),sliderVerde.getValue(),sliderAzul.getValue()));
 				
 				thisRef.dispose();
 			}
@@ -256,8 +225,8 @@ public class ElegirTamaño extends JDialog {
 	});
 		
 		
-		botonColor.setBackground(new Color(sliderRojo.getValue(),sliderVerde.getValue(),sliderAzul.getValue()));
-		lbl.setBackground(new Color(sliderRojo.getValue(),sliderVerde.getValue(),sliderAzul.getValue()));
+		botonColor.setBackground(Color.WHITE);
+		
 	}
 	
 		public void cambiaValorHex() {

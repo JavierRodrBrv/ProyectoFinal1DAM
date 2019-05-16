@@ -26,6 +26,7 @@ import java.io.IOException;
 import java.awt.event.ItemEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.Toolkit;
 
 
 
@@ -37,12 +38,13 @@ public class Ventana extends JFrame{
 	
 	public Ventana() {
 		super();
+		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\1DAM\\Documents\\GitHub\\ProyectoFinal1DAM\\imagenes\\icono2.jpg"));
 	
 		this.setTitle("Paint");
 		setSize(500,500);
 		principal=new Principal(this);
-		
 		this.setLocationRelativeTo(null);
+		
 		
 		JMenuBar menuBar = new JMenuBar();
 		menuBar.setBackground(SystemColor.inactiveCaptionBorder);
@@ -63,15 +65,7 @@ public class Ventana extends JFrame{
 				archivoCogido=elegir.getSelectedFile();
 				int opcionElegida=elegir.showOpenDialog(principal);
 				
-				try {
-					imagen=ImageIO.read(archivoCogido);
-					principal.setImagen(imagen);
-					
-					
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+				
 				
 				
 				

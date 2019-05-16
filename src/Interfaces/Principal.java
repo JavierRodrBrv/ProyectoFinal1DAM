@@ -2,6 +2,7 @@ package Interfaces;
 
 import javax.swing.JPanel;
 import java.awt.FlowLayout;
+import java.awt.Graphics2D;
 import java.awt.Color;
 import java.awt.BorderLayout;
 import javax.swing.BoxLayout;
@@ -24,7 +25,7 @@ import java.awt.Insets;
 public class Principal extends JPanel{
 	private Ventana ventana;
 	private BufferedImage imagen;
-	private JLabel label;
+	private JLabel lienzo;
 	
 	
 
@@ -44,13 +45,12 @@ public class Principal extends JPanel{
 		setBackground(new Color(204, 204, 255));
 		
 		
-		label=new JLabel();
-		GridBagConstraints gbc_label = new GridBagConstraints();
-		gbc_label.fill = GridBagConstraints.BOTH;
-		gbc_label.gridx = 0;
-		gbc_label.gridy = 0;
-		this.add(label, gbc_label);
-		this.ventana.setSize(500,500);
+		lienzo=new JLabel();
+		GridBagConstraints gbc_lienzo = new GridBagConstraints();
+		gbc_lienzo.fill = GridBagConstraints.BOTH;
+		gbc_lienzo.gridx = 0;
+		gbc_lienzo.gridy = 0;
+		this.add(lienzo, gbc_lienzo);
 		
 		this.setVisible(true);
 	}
@@ -58,13 +58,13 @@ public class Principal extends JPanel{
 	
 	
 	public JLabel getLabel() {
-		return label;
+		return lienzo;
 	}
 
 
 
 	public void setLabel(JLabel label) {
-		this.label = label;
+		this.lienzo = label;
 	}
 
 
@@ -73,9 +73,13 @@ public class Principal extends JPanel{
 		return imagen;
 	}
 
-	public void setImagen(BufferedImage imagen) {
+	public void setImagen(BufferedImage imagen,Color color) {
 		this.imagen = imagen;
-		this.label.setIcon(new ImageIcon(imagen));
+		
+		Graphics2D    graphics = imagen.createGraphics();
+		graphics.setPaint ( color );
+		graphics.fillRect ( 0, 0, imagen.getWidth(), imagen.getHeight() );
+		this.lienzo.setIcon(new ImageIcon(imagen));
 	}
 	
 	

@@ -29,11 +29,13 @@ public class ElegirTamaño extends JDialog {
 	private JSlider sliderVerde;
 	private JSlider sliderAzul;
 	private JTextField valorHexa;
-	
+	private JLabel lbl;
 	public ElegirTamaño(Principal p) {
 		
 		this.principal=p;
 		thisRef=this;
+		lbl=p.getLabel();
+		
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{70, 79, 86, 257, 68, 146, 0};
 		gridBagLayout.rowHeights = new int[]{60, 20, 56, 20, 0, 0};
@@ -255,7 +257,7 @@ public class ElegirTamaño extends JDialog {
 		
 		
 		botonColor.setBackground(new Color(sliderRojo.getValue(),sliderVerde.getValue(),sliderAzul.getValue()));
-		
+		lbl.setBackground(new Color(sliderRojo.getValue(),sliderVerde.getValue(),sliderAzul.getValue()));
 	}
 	
 		public void cambiaValorHex() {

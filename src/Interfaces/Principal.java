@@ -41,11 +41,10 @@ public class Principal extends JPanel{
 		gridBagLayout.rowWeights = new double[]{1.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 		
-		setBackground(SystemColor.textHighlight);
+		setBackground(new Color(204, 204, 255));
 		
 		
 		label=new JLabel();
-		label.setBackground(SystemColor.textHighlight);
 		GridBagConstraints gbc_label = new GridBagConstraints();
 		gbc_label.fill = GridBagConstraints.BOTH;
 		gbc_label.gridx = 0;
@@ -58,6 +57,18 @@ public class Principal extends JPanel{
 	
 	
 	
+	public JLabel getLabel() {
+		return label;
+	}
+
+
+
+	public void setLabel(JLabel label) {
+		this.label = label;
+	}
+
+
+
 	public BufferedImage getImagen() {
 		return imagen;
 	}

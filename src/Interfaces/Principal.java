@@ -2,6 +2,7 @@ package Interfaces;
 
 import javax.swing.JPanel;
 import java.awt.FlowLayout;
+import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Color;
 import java.awt.BorderLayout;
@@ -9,6 +10,10 @@ import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 
 import java.awt.Panel;
+import java.awt.Point;
+import java.awt.RenderingHints;
+import java.awt.Shape;
+
 import javax.swing.JMenuBar;
 import java.awt.SystemColor;
 import java.awt.image.BufferedImage;
@@ -21,17 +26,21 @@ import javax.swing.JLabel;
 
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
+import java.awt.geom.Line2D;
 
 public class Principal extends JPanel{
 	private Ventana ventana;
 	private BufferedImage imagen;
 	private JLabel lienzo;
-	
-	
+
 
 	public Principal(Ventana v) {
 		
 		super();
+		
 		this.ventana=v;
 		
 		
@@ -46,15 +55,38 @@ public class Principal extends JPanel{
 		
 		
 		lienzo=new JLabel();
+		lienzo.addMouseMotionListener(new MouseMotionAdapter() {
+			
+			public void mouseDragged(MouseEvent e) {
+				
+				 lienzo.setText("X="+e.getX()+", Y="+e.getY());  
+				    Graphics g=getGraphics();  
+				    g.setColor(Color.RED);  
+				    g.fillOval(e.getX(),e.getY(),10,10);  
+				
+			}
+			
+			public void mouseMoved(MouseEvent e) {
+				
+				lienzo.setText("X="+e.getX()+", Y="+e.getY());  
+			}
+			
+			
+		});
+		
 		GridBagConstraints gbc_lienzo = new GridBagConstraints();
 		gbc_lienzo.fill = GridBagConstraints.BOTH;
 		gbc_lienzo.gridx = 0;
 		gbc_lienzo.gridy = 0;
 		this.add(lienzo, gbc_lienzo);
 		
+		
+		
 		this.setVisible(true);
 	}
 	
+	 
+
 	
 	
 	public JLabel getLabel() {
@@ -76,6 +108,8 @@ public class Principal extends JPanel{
 	public void setImagen(BufferedImage imagen,Color color) {
 		this.imagen = imagen;
 		
+		//Aqui es donde cambiamos el color del lienzo cuando lo creamos.
+	
 		Graphics2D    graphics = imagen.createGraphics();
 		graphics.setPaint ( color );
 		graphics.fillRect ( 0, 0, imagen.getWidth(), imagen.getHeight() );

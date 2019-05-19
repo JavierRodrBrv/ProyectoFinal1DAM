@@ -4,6 +4,7 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
@@ -34,18 +35,20 @@ public class Ventana extends JFrame{
 	private Principal principal;
 	private File archivoCogido;
 	private BufferedImage imagen;
-	
-	
+	private ElegirTamaño et;
+	private JLabel lienzo;
 	public Ventana() {
 		super();
-		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\1DAM\\Documents\\GitHub\\ProyectoFinal1DAM\\imagenes\\icono2.jpg"));
-	
 		this.setTitle("Paint");
 		setSize(500,500);
-		principal=new Principal(this);
 		this.setLocationRelativeTo(null);
+		setIconImage(Toolkit.getDefaultToolkit().getImage("./imagenes/icono2.jpg"));
 		
 		
+		
+		lienzo=principal.getLabel();
+		
+		principal=new Principal(this);
 		JMenuBar menuBar = new JMenuBar();
 		menuBar.setBackground(SystemColor.inactiveCaptionBorder);
 		setJMenuBar(menuBar);
@@ -95,7 +98,7 @@ public class Ventana extends JFrame{
 		mntmCrear.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		mntmCrear.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ElegirTamaño et=new ElegirTamaño(principal);
+				et=new ElegirTamaño(principal);
 				et.setVisible(true);
 			}
 		});
@@ -105,7 +108,8 @@ public class Ventana extends JFrame{
 		mntmBorrar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		mntmBorrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				principal.remove(lienzo);
+				principal.repaint();
 			}
 		});
 		mnOpciones.add(mntmBorrar);

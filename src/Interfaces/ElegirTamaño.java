@@ -30,14 +30,11 @@ public class ElegirTamaño extends JDialog {
 	private JSlider sliderVerde;
 	private JSlider sliderAzul;
 	private JTextField valorHexa;
-	private JLabel lienzo;
 	public ElegirTamaño(Principal p) {
 		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\1DAM\\Documents\\GitHub\\ProyectoFinal1DAM\\imagenes\\icono2.jpg"));
 		
 		this.principal=p;
 		thisRef=this;
-		lienzo=p.getLabel();
-		
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{70, 79, 86, 257, 68, 146, 0};
 		gridBagLayout.rowHeights = new int[]{60, 20, 56, 20, 0, 0};
@@ -121,6 +118,7 @@ public class ElegirTamaño extends JDialog {
 				
 			}
 		});
+		
 		botonConfirmar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {

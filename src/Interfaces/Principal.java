@@ -30,6 +30,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.awt.geom.Line2D;
+import javax.swing.SwingConstants;
 
 public class Principal extends JPanel{
 	private Ventana ventana;
@@ -43,27 +44,25 @@ public class Principal extends JPanel{
 		
 		this.ventana=v;
 		
-		
-		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[]{450, 0};
-		gridBagLayout.rowHeights = new int[]{300, 0};
-		gridBagLayout.columnWeights = new double[]{1.0, Double.MIN_VALUE};
-		gridBagLayout.rowWeights = new double[]{1.0, Double.MIN_VALUE};
-		setLayout(gridBagLayout);
-		
 		setBackground(new Color(204, 204, 255));
 		
 		
 		lienzo=new JLabel();
+		lienzo.setVerticalAlignment(SwingConstants.TOP);
 		lienzo.addMouseMotionListener(new MouseMotionAdapter() {
 			
 			public void mouseDragged(MouseEvent e) {
 				
-				 lienzo.setText("X="+e.getX()+", Y="+e.getY());  
+				/* lienzo.setText("X="+e.getX()+", Y="+e.getY());  
 				    Graphics g=getGraphics();  
 				    g.setColor(Color.RED);  
 				    g.fillOval(e.getX(),e.getY(),10,10);  
-				
+				    System.out.println(e.getX()+" : "+e.getY());*/
+				    imagen.setRGB(e.getX(), e.getY(), Color.red.getRGB());
+				    
+				    lienzo.repaint();
+					repaint();
+					ventana.repaint();
 			}
 			
 			public void mouseMoved(MouseEvent e) {
@@ -73,12 +72,8 @@ public class Principal extends JPanel{
 			
 			
 		});
-		
-		GridBagConstraints gbc_lienzo = new GridBagConstraints();
-		gbc_lienzo.fill = GridBagConstraints.BOTH;
-		gbc_lienzo.gridx = 0;
-		gbc_lienzo.gridy = 0;
-		this.add(lienzo, gbc_lienzo);
+		setLayout(new BorderLayout(0, 0));
+		this.add(lienzo);
 		
 		
 		
@@ -110,10 +105,26 @@ public class Principal extends JPanel{
 		
 		//Aqui es donde cambiamos el color del lienzo cuando lo creamos.
 	
-		Graphics2D    graphics = imagen.createGraphics();
+		/*Graphics2D    graphics = imagen.createGraphics();
 		graphics.setPaint ( color );
-		graphics.fillRect ( 0, 0, imagen.getWidth(), imagen.getHeight() );
+		graphics.fillRect ( 0, 0, imagen.getWidth(), imagen.getHeight() );*/
+		for (int i = 0; i < imagen.getWidth(); i++) {
+			for (int j = 0; j < imagen.getHeight(); j++) {
+				imagen.setRGB(i, j, color.getRGB());
+			}
+		}
 		this.lienzo.setIcon(new ImageIcon(imagen));
+		this.lienzo.repaint();
+		this.repaint();
+		ventana.repaint();
+	}
+	
+	
+	public void borrar() {
+		lienzo.setIcon(null);
+		this.lienzo.repaint();
+		this.repaint();
+		ventana.repaint();
 	}
 	
 	

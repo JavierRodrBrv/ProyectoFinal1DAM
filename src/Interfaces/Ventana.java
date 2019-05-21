@@ -13,8 +13,12 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import Conexiones.ConexionBD;
+import Excepciones.ConexionException;
+
 import java.awt.SystemColor;
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.event.ItemListener;
@@ -36,7 +40,6 @@ public class Ventana extends JFrame{
 	private File archivoCogido;
 	private BufferedImage imagen;
 	private ElegirTamaño et;
-	private JLabel lienzo;
 	public Ventana() {
 		super();
 		this.setTitle("Paint");
@@ -45,8 +48,13 @@ public class Ventana extends JFrame{
 		setIconImage(Toolkit.getDefaultToolkit().getImage("./imagenes/icono2.jpg"));
 		
 		
-		
-		lienzo=principal.getLabel();
+		//Hacemos conexion a la base de datos
+		try {
+			ConexionBD.crearStatement();
+		} catch (ConexionException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		
 		principal=new Principal(this);
 		JMenuBar menuBar = new JMenuBar();
@@ -67,6 +75,12 @@ public class Ventana extends JFrame{
 				
 				archivoCogido=elegir.getSelectedFile();
 				int opcionElegida=elegir.showOpenDialog(principal);
+				try {
+					principal.setImagen(ImageIO.read(archivoCogido),Color.red);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				
 				
 				
@@ -108,7 +122,7 @@ public class Ventana extends JFrame{
 		mntmBorrar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		mntmBorrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				principal.remove(lienzo);
+				principal.borrar();
 				principal.repaint();
 			}
 		});

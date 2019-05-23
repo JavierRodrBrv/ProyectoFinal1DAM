@@ -1,6 +1,7 @@
 package Interfaces;
 
 import javax.imageio.ImageIO;
+import javax.imageio.stream.ImageOutputStream;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -23,8 +24,10 @@ import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.event.ItemListener;
 import java.awt.image.BufferedImage;
+import java.awt.image.RenderedImage;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -73,10 +76,17 @@ public class Ventana extends JFrame{
 				FileNameExtensionFilter filter=new FileNameExtensionFilter("JPEG file,GIF,PNG","jpg","gif","png");
 				elegir.setFileFilter(filter);
 				
-				archivoCogido=elegir.getSelectedFile();
+				
 				int opcionElegida=elegir.showOpenDialog(principal);
+				if(opcionElegida==JFileChooser.APPROVE_OPTION) {
+					archivoCogido=elegir.getSelectedFile();
+					System.out.println(archivoCogido.getAbsolutePath());
+					
+					
+					
 				try {
-					principal.setImagen(ImageIO.read(archivoCogido),Color.red);
+					principal.abrirImagen(ImageIO.read(new FileInputStream(archivoCogido)));
+					
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -84,7 +94,7 @@ public class Ventana extends JFrame{
 				
 				
 				
-				
+				}
 				
 			}
 		});
@@ -92,6 +102,27 @@ public class Ventana extends JFrame{
 		mnArchivo.add(mntmAbrir);
 		
 		JMenuItem mntmGuardar = new JMenuItem("Guardar");
+		mntmGuardar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				 
+				JFileChooser elGuardar= new JFileChooser();
+				FileNameExtensionFilter filter=new FileNameExtensionFilter("JPEG file,GIF,PNG","jpg","gif","png");
+				elGuardar.setFileFilter(filter);
+				int eleccionValor=elGuardar.showSaveDialog(null);
+				if(eleccionValor==JFileChooser.APPROVE_OPTION) {
+					File f=elGuardar.getSelectedFile();
+					String ruta= f.getAbsolutePath();
+					
+					try {
+						ImageIO.write(imagen,"jpg",new File(ruta));
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				
+			}
+		});
 		mntmGuardar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		mnArchivo.add(mntmGuardar);
 		
@@ -130,6 +161,8 @@ public class Ventana extends JFrame{
 		
 		this.setContentPane(principal);
 		this.setVisible(true);
+		
+		
+		}
 	}
 
-}

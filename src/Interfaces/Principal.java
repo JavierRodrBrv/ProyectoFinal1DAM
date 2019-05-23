@@ -99,20 +99,31 @@ public class Principal extends JPanel{
 	public BufferedImage getImagen() {
 		return imagen;
 	}
-
+	
+	
+	
 	public void setImagen(BufferedImage imagen,Color color) {
 		this.imagen = imagen;
 		
 		//Aqui es donde cambiamos el color del lienzo cuando lo creamos.
 	
-		/*Graphics2D    graphics = imagen.createGraphics();
-		graphics.setPaint ( color );
-		graphics.fillRect ( 0, 0, imagen.getWidth(), imagen.getHeight() );*/
 		for (int i = 0; i < imagen.getWidth(); i++) {
 			for (int j = 0; j < imagen.getHeight(); j++) {
 				imagen.setRGB(i, j, color.getRGB());
 			}
 		}
+		this.lienzo.setIcon(new ImageIcon(imagen));
+		this.lienzo.repaint();
+		this.repaint();
+		ventana.repaint();
+	}
+	
+	public void abrirImagen(BufferedImage imagen) {
+		this.imagen = imagen;
+		
+		//Aqui es donde cambiamos el color del lienzo cuando lo creamos.
+	
+		
 		this.lienzo.setIcon(new ImageIcon(imagen));
 		this.lienzo.repaint();
 		this.repaint();

@@ -31,13 +31,25 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.awt.geom.Line2D;
 import javax.swing.SwingConstants;
+import javax.swing.JSlider;
+import java.awt.Dimension;
+import java.awt.GridLayout;
+import com.jgoodies.forms.layout.FormLayout;
+import com.jgoodies.forms.layout.ColumnSpec;
+import com.jgoodies.forms.layout.RowSpec;
+import net.miginfocom.swing.MigLayout;
+import com.jgoodies.forms.layout.FormSpecs;
+import javax.swing.event.ChangeListener;
+import javax.swing.event.ChangeEvent;
 
 public class Principal extends JPanel{
 	private Ventana ventana;
 	private BufferedImage imagen;
 	private JLabel lienzo;
-
-
+	private JSlider sliderRojo;
+	private JSlider sliderVerde;
+	private JSlider sliderAzul;
+	
 	public Principal(Ventana v) {
 		
 		super();
@@ -47,22 +59,89 @@ public class Principal extends JPanel{
 		setBackground(new Color(204, 204, 255));
 		
 		
+		
+		setLayout(new BorderLayout(0, 0));
+		
+		
+		JPanel panel = new JPanel();
+		add(panel, BorderLayout.EAST);
+		GridBagLayout gbl_panel = new GridBagLayout();
+		gbl_panel.columnWidths = new int[]{144, 0};
+		gbl_panel.rowHeights = new int[]{47, 43, 40, 43, 0};
+		gbl_panel.columnWeights = new double[]{0.0, Double.MIN_VALUE};
+		gbl_panel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		panel.setLayout(gbl_panel);
+		
+		JButton botonHerramienta = new JButton("");
+		botonHerramienta.setMinimumSize(new Dimension(27, 9));
+		botonHerramienta.setMaximumSize(new Dimension(20, 9));
+		GridBagConstraints gbc_button = new GridBagConstraints();
+		gbc_button.fill = GridBagConstraints.VERTICAL;
+		gbc_button.gridx = 0;
+		gbc_button.gridy = 3;
+		panel.add(botonHerramienta, gbc_button);
+		
+		
+		
+		sliderRojo = new JSlider();
+		
+		GridBagConstraints gbc_sliderRojo = new GridBagConstraints();
+		gbc_sliderRojo.fill = GridBagConstraints.BOTH;
+		gbc_sliderRojo.insets = new Insets(0, 0, 5, 0);
+		gbc_sliderRojo.gridx = 0;
+		gbc_sliderRojo.gridy = 0;
+		panel.add(sliderRojo, gbc_sliderRojo);
+		sliderRojo.setValue(0);
+		sliderRojo.setMaximum(255);
+		
+		sliderVerde = new JSlider();
+		
+		GridBagConstraints gbc_sliderVerde = new GridBagConstraints();
+		gbc_sliderVerde.fill = GridBagConstraints.BOTH;
+		gbc_sliderVerde.insets = new Insets(0, 0, 5, 0);
+		gbc_sliderVerde.gridx = 0;
+		gbc_sliderVerde.gridy = 1;
+		panel.add(sliderVerde, gbc_sliderVerde);
+		sliderVerde.setValue(0);
+		sliderVerde.setMaximum(255);
+		
+		sliderAzul = new JSlider();
+		
+		GridBagConstraints gbc_sliderAzul = new GridBagConstraints();
+		gbc_sliderAzul.fill = GridBagConstraints.BOTH;
+		gbc_sliderAzul.insets = new Insets(0, 0, 5, 0);
+		gbc_sliderAzul.gridx = 0;
+		gbc_sliderAzul.gridy = 2;
+		panel.add(sliderAzul, gbc_sliderAzul);
+		sliderAzul.setValue(0);
+		sliderAzul.setMaximum(255);
+		
+		
+		
+		
+		
+		this.setVisible(true);
+		
 		lienzo=new JLabel();
 		lienzo.setVerticalAlignment(SwingConstants.TOP);
 		lienzo.addMouseMotionListener(new MouseMotionAdapter() {
 			
 			public void mouseDragged(MouseEvent e) {
 				
-				/* lienzo.setText("X="+e.getX()+", Y="+e.getY());  
-				    Graphics g=getGraphics();  
-				    g.setColor(Color.RED);  
-				    g.fillOval(e.getX(),e.getY(),10,10);  
-				    System.out.println(e.getX()+" : "+e.getY());*/
-				    imagen.setRGB(e.getX(), e.getY(), Color.red.getRGB());
-				    
+				
+				int [] colores= new int[255];
+				colores[0]=sliderRojo.getValue();
+				colores[1]=sliderVerde.getValue();
+				colores[2]=sliderAzul.getValue();
+				
+				System.out.println(colores[0]+ "" + colores[1] +""+colores[2]);
+				
+				    imagen.setRGB(e.getX(), e.getY(), 10, 10,colores , 0, 0);
+				 
 				    lienzo.repaint();
 					repaint();
 					ventana.repaint();
+					
 			}
 			
 			public void mouseMoved(MouseEvent e) {
@@ -71,13 +150,31 @@ public class Principal extends JPanel{
 			}
 			
 			
+			
 		});
-		setLayout(new BorderLayout(0, 0));
+		
+		sliderRojo.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent arg0) {
+
+				botonHerramienta.setBackground(new Color(sliderRojo.getValue(),sliderVerde.getValue(),sliderAzul.getValue()));
+			}
+		});
+		
+		sliderVerde.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent e) {
+
+				botonHerramienta.setBackground(new Color(sliderRojo.getValue(),sliderVerde.getValue(),sliderAzul.getValue()));
+			}
+		});
+		
+		sliderAzul.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent e) {
+
+				botonHerramienta.setBackground(new Color(sliderRojo.getValue(),sliderVerde.getValue(),sliderAzul.getValue()));
+			}
+		});
+		
 		this.add(lienzo);
-		
-		
-		
-		this.setVisible(true);
 	}
 	
 	 
@@ -137,6 +234,4 @@ public class Principal extends JPanel{
 		this.repaint();
 		ventana.repaint();
 	}
-	
-	
 }

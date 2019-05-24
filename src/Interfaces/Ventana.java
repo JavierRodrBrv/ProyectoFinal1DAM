@@ -43,6 +43,8 @@ public class Ventana extends JFrame{
 	private File archivoCogido;
 	private BufferedImage imagen;
 	private ElegirTamaño et;
+	
+	
 	public Ventana() {
 		super();
 		this.setTitle("Paint");

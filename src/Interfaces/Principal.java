@@ -34,11 +34,6 @@ import javax.swing.SwingConstants;
 import javax.swing.JSlider;
 import java.awt.Dimension;
 import java.awt.GridLayout;
-import com.jgoodies.forms.layout.FormLayout;
-import com.jgoodies.forms.layout.ColumnSpec;
-import com.jgoodies.forms.layout.RowSpec;
-import net.miginfocom.swing.MigLayout;
-import com.jgoodies.forms.layout.FormSpecs;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ChangeEvent;
 

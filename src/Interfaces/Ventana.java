@@ -52,8 +52,8 @@ public class Ventana extends JFrame{
 		this.setLocationRelativeTo(null);
 		setIconImage(Toolkit.getDefaultToolkit().getImage("./imagenes/icono2.jpg"));
 		
-		
 		//Hacemos conexion a la base de datos
+		
 		try {
 			ConexionBD.crearStatement();
 		} catch (ConexionException e1) {
@@ -116,7 +116,7 @@ public class Ventana extends JFrame{
 					String ruta= f.getAbsolutePath();
 					
 					try {
-						ImageIO.write(imagen,"jpg",new File(ruta));
+						ImageIO.write(principal.getImagen(),"jpg",new File(ruta));
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();

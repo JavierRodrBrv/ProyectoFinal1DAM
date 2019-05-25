@@ -131,7 +131,7 @@ public class Principal extends JPanel{
 				
 				System.out.println(colores[0]+ "" + colores[1] +""+colores[2]);
 				
-				    imagen.setRGB(e.getX(), e.getY(), 10, 10,colores , 0, 0);
+				    imagen.setRGB(e.getX(), e.getY(), 4, 4,colores , 0, 0);
 				 
 				    lienzo.repaint();
 					repaint();

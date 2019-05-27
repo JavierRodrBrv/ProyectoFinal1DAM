@@ -14,7 +14,7 @@ public class ConexionBD {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			throw new ConexionException("La conexion a bd falla");
+			throw new ConexionException("La conexion ha bd fallado");
 		}
 	}
 	

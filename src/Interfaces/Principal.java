@@ -36,6 +36,9 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ChangeEvent;
+import javax.swing.JRadioButton;
+import java.awt.Cursor;
+import javax.swing.ButtonGroup;
 
 public class Principal extends JPanel{
 	private Ventana ventana;
@@ -44,6 +47,11 @@ public class Principal extends JPanel{
 	private JSlider sliderRojo;
 	private JSlider sliderVerde;
 	private JSlider sliderAzul;
+	private JButton botonGuardaColores;
+	private JRadioButton opPincel2px;
+	private JRadioButton opPincel4px;
+	private JRadioButton opPincel6px;
+	private final ButtonGroup buttonGroup = new ButtonGroup();
 	
 	public Principal(Ventana v) {
 		
@@ -62,19 +70,27 @@ public class Principal extends JPanel{
 		add(panel, BorderLayout.EAST);
 		GridBagLayout gbl_panel = new GridBagLayout();
 		gbl_panel.columnWidths = new int[]{144, 0};
-		gbl_panel.rowHeights = new int[]{47, 43, 40, 43, 0};
+		gbl_panel.rowHeights = new int[]{47, 43, 40, 43, 0, 0, 0, 0, 0};
 		gbl_panel.columnWeights = new double[]{0.0, Double.MIN_VALUE};
-		gbl_panel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_panel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		panel.setLayout(gbl_panel);
 		
-		JButton botonHerramienta = new JButton("");
-		botonHerramienta.setMinimumSize(new Dimension(27, 9));
-		botonHerramienta.setMaximumSize(new Dimension(20, 9));
-		GridBagConstraints gbc_button = new GridBagConstraints();
-		gbc_button.fill = GridBagConstraints.VERTICAL;
-		gbc_button.gridx = 0;
-		gbc_button.gridy = 3;
-		panel.add(botonHerramienta, gbc_button);
+		JButton botonColor = new JButton("");
+		botonColor.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				
+			}
+		});
+		botonColor.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		botonColor.setMinimumSize(new Dimension(27, 9));
+		botonColor.setMaximumSize(new Dimension(20, 9));
+		GridBagConstraints gbc_botonColor = new GridBagConstraints();
+		gbc_botonColor.insets = new Insets(0, 0, 5, 0);
+		gbc_botonColor.fill = GridBagConstraints.VERTICAL;
+		gbc_botonColor.gridx = 0;
+		gbc_botonColor.gridy = 3;
+		panel.add(botonColor, gbc_botonColor);
 		
 		
 		
@@ -111,6 +127,38 @@ public class Principal extends JPanel{
 		sliderAzul.setValue(0);
 		sliderAzul.setMaximum(255);
 		
+		botonGuardaColores = new JButton("Guardar color");
+		botonGuardaColores.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		GridBagConstraints gbc_botonGuardaColores1 = new GridBagConstraints();
+		gbc_botonGuardaColores1.insets = new Insets(0, 0, 5, 0);
+		gbc_botonGuardaColores1.anchor = GridBagConstraints.SOUTH;
+		gbc_botonGuardaColores1.gridx = 0;
+		gbc_botonGuardaColores1.gridy = 4;
+		panel.add(botonGuardaColores, gbc_botonGuardaColores1);
+		
+		opPincel2px = new JRadioButton("Pincel 2px");
+		buttonGroup.add(opPincel2px);
+		GridBagConstraints gbc_opPincel2px = new GridBagConstraints();
+		gbc_opPincel2px.insets = new Insets(0, 0, 5, 0);
+		gbc_opPincel2px.gridx = 0;
+		gbc_opPincel2px.gridy = 5;
+		panel.add(opPincel2px, gbc_opPincel2px);
+		
+		opPincel4px = new JRadioButton("Pincel 4px");
+		buttonGroup.add(opPincel4px);
+		GridBagConstraints gbc_opPincel4px = new GridBagConstraints();
+		gbc_opPincel4px.insets = new Insets(0, 0, 5, 0);
+		gbc_opPincel4px.gridx = 0;
+		gbc_opPincel4px.gridy = 6;
+		panel.add(opPincel4px, gbc_opPincel4px);
+		
+		opPincel6px = new JRadioButton("Pincel 6px");
+		buttonGroup.add(opPincel6px);
+		GridBagConstraints gbc_opPincel6px = new GridBagConstraints();
+		gbc_opPincel6px.gridx = 0;
+		gbc_opPincel6px.gridy = 7;
+		panel.add(opPincel6px, gbc_opPincel6px);
+		
 		
 		
 		
@@ -131,7 +179,7 @@ public class Principal extends JPanel{
 				
 				System.out.println(colores[0]+ "" + colores[1] +""+colores[2]);
 				
-				    imagen.setRGB(e.getX(), e.getY(), 4, 4,colores , 0, 0);
+				    imagen.setRGB(e.getX(), e.getY(), 4, 4,colores , 0, 255);
 				 
 				    lienzo.repaint();
 					repaint();
@@ -151,21 +199,21 @@ public class Principal extends JPanel{
 		sliderRojo.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent arg0) {
 
-				botonHerramienta.setBackground(new Color(sliderRojo.getValue(),sliderVerde.getValue(),sliderAzul.getValue()));
+				botonColor.setBackground(new Color(sliderRojo.getValue(),sliderVerde.getValue(),sliderAzul.getValue()));
 			}
 		});
 		
 		sliderVerde.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
 
-				botonHerramienta.setBackground(new Color(sliderRojo.getValue(),sliderVerde.getValue(),sliderAzul.getValue()));
+				botonColor.setBackground(new Color(sliderRojo.getValue(),sliderVerde.getValue(),sliderAzul.getValue()));
 			}
 		});
 		
 		sliderAzul.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
 
-				botonHerramienta.setBackground(new Color(sliderRojo.getValue(),sliderVerde.getValue(),sliderAzul.getValue()));
+				botonColor.setBackground(new Color(sliderRojo.getValue(),sliderVerde.getValue(),sliderAzul.getValue()));
 			}
 		});
 		
@@ -213,7 +261,6 @@ public class Principal extends JPanel{
 	public void abrirImagen(BufferedImage imagen) {
 		this.imagen = imagen;
 		
-		//Aqui es donde cambiamos el color del lienzo cuando lo creamos.
 	
 		
 		this.lienzo.setIcon(new ImageIcon(imagen));

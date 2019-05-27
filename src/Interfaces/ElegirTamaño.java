@@ -9,6 +9,7 @@ import javax.swing.JButton;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
@@ -30,6 +31,8 @@ public class ElegirTamaño extends JDialog {
 	private JSlider sliderVerde;
 	private JSlider sliderAzul;
 	private JTextField valorHexa;
+	
+	
 	public ElegirTamaño(Principal p) {
 		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\1DAM\\Documents\\GitHub\\ProyectoFinal1DAM\\imagenes\\icono2.jpg"));
 		
@@ -123,11 +126,16 @@ public class ElegirTamaño extends JDialog {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				
+				if(ancho.getText()==""&&alto.getText()=="") {
+					predeterminado();
+				}
+				
 				p.setImagen(new BufferedImage(Integer.parseInt
 						(ancho.getText()),Integer.parseInt
 						(alto.getText()),BufferedImage.TYPE_INT_RGB),new Color(sliderRojo.getValue(),sliderVerde.getValue(),sliderAzul.getValue()));
 				
 				thisRef.dispose();
+				
 			}
 		});
 		
@@ -236,4 +244,10 @@ public class ElegirTamaño extends JDialog {
 			valorHexa.setText("#"+hexRojo+hexVerde+hexAzul);
 		
 	}
+		
+		public void predeterminado() {
+			
+			BufferedImage imagenPredet= imagenPredet=new BufferedImage(300,300,BufferedImage.TYPE_INT_RGB);
+			
+		}
 }

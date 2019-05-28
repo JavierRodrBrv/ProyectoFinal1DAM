@@ -34,11 +34,17 @@ import javax.swing.SwingConstants;
 import javax.swing.JSlider;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.Image;
+
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ChangeEvent;
 import javax.swing.JRadioButton;
 import java.awt.Cursor;
 import javax.swing.ButtonGroup;
+import javax.swing.Icon;
+
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class Principal extends JPanel{
 	private Ventana ventana;
@@ -52,6 +58,8 @@ public class Principal extends JPanel{
 	private JRadioButton opPincel4px;
 	private JRadioButton opPincel6px;
 	private final ButtonGroup buttonGroup = new ButtonGroup();
+	private JButton seleccionarPincel;
+	private JButton seleccionarGoma;
 	
 	public Principal(Ventana v) {
 		
@@ -70,9 +78,9 @@ public class Principal extends JPanel{
 		add(panel, BorderLayout.EAST);
 		GridBagLayout gbl_panel = new GridBagLayout();
 		gbl_panel.columnWidths = new int[]{144, 0};
-		gbl_panel.rowHeights = new int[]{47, 43, 40, 43, 0, 0, 0, 0, 0};
+		gbl_panel.rowHeights = new int[]{47, 43, 40, 43, 0, 0, 0, 0, 39, 33, 0};
 		gbl_panel.columnWeights = new double[]{0.0, Double.MIN_VALUE};
-		gbl_panel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_panel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		panel.setLayout(gbl_panel);
 		
 		JButton botonColor = new JButton("");
@@ -155,13 +163,40 @@ public class Principal extends JPanel{
 		opPincel6px = new JRadioButton("Pincel 6px");
 		buttonGroup.add(opPincel6px);
 		GridBagConstraints gbc_opPincel6px = new GridBagConstraints();
+		gbc_opPincel6px.insets = new Insets(0, 0, 5, 0);
 		gbc_opPincel6px.gridx = 0;
 		gbc_opPincel6px.gridy = 7;
 		panel.add(opPincel6px, gbc_opPincel6px);
 		
+		seleccionarPincel = new JButton("");
+		GridBagConstraints gbc_seleccionarPincel = new GridBagConstraints();
+		gbc_seleccionarPincel.insets = new Insets(0, 0, 5, 0);
+		gbc_seleccionarPincel.fill = GridBagConstraints.VERTICAL;
+		gbc_seleccionarPincel.gridx = 0;
+		gbc_seleccionarPincel.gridy = 8;
 		
+		//PENDIENTE DE VERLO NO FUNCIONA
+		/*
+		ImageIcon imagenPincel= new ImageIcon("\"./imagenes/goma.ico\"");
+		Icon iconoPincel= new ImageIcon(imagenPincel.getImage().getScaledInstance(seleccionarPincel.getWidth(), seleccionarPincel.getHeight(), Image.SCALE_DEFAULT));
+		seleccionarGoma.setIcon(iconoPincel);*/
+
+		panel.add(seleccionarPincel, gbc_seleccionarPincel);
 		
+		seleccionarGoma = new JButton("");
+		GridBagConstraints gbc_seleccionarGoma = new GridBagConstraints();
+		gbc_seleccionarGoma.fill = GridBagConstraints.VERTICAL;
+		gbc_seleccionarGoma.gridx = 0;
+		gbc_seleccionarGoma.gridy = 9;
 		
+		//PENDIENTE DE VERLO NO FUNCIONA
+		/*
+		ImageIcon imagenGoma= new ImageIcon("\"./imagenes/goma.ico\"");
+		Icon iconoGoma= new ImageIcon(imagenGoma.getImage().getScaledInstance(seleccionarGoma.getWidth(), seleccionarGoma.getHeight(), Image.SCALE_DEFAULT));
+		seleccionarGoma.setIcon(iconoGoma);
+		*/
+		
+		panel.add(seleccionarGoma, gbc_seleccionarGoma);
 		
 		this.setVisible(true);
 		
@@ -179,12 +214,32 @@ public class Principal extends JPanel{
 				
 				System.out.println(colores[0]+ "" + colores[1] +""+colores[2]);
 				
-				    imagen.setRGB(e.getX(), e.getY(), 4, 4,colores , 0, 0);
-				 
+				
+				if(opPincel2px.isSelected()==true) {
+					
+				    imagen.setRGB(e.getX(), e.getY(), 2, 2,colores , 0, 0);
+				  
 				    lienzo.repaint();
 					repaint();
 					ventana.repaint();
 					
+				}else if(opPincel4px.isSelected()==true) {
+					
+					
+					imagen.setRGB(e.getX(), e.getY(), 4, 4,colores , 0, 0);
+					  
+				    lienzo.repaint();
+					repaint();
+					ventana.repaint();
+					
+				}else if(opPincel6px.isSelected()==true) {
+					imagen.setRGB(e.getX(), e.getY(), 6, 6,colores , 0, 0);
+					  
+				    lienzo.repaint();
+					repaint();
+					ventana.repaint();
+					
+				}
 			}
 			
 			public void mouseMoved(MouseEvent e) {
@@ -218,6 +273,8 @@ public class Principal extends JPanel{
 		});
 		
 		this.add(lienzo);
+		
+		
 	}
 	
 	 

@@ -40,11 +40,11 @@ public class ElegirTamaño extends JDialog {
 		thisRef=this;
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{70, 79, 86, 257, 68, 146, 0};
-		gridBagLayout.rowHeights = new int[]{60, 20, 56, 20, 0, 0};
+		gridBagLayout.rowHeights = new int[]{60, 49, 54, 43, 35, 0};
 		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
-		gridBagLayout.rowWeights = new double[]{0.0, 1.0, 1.0, 1.0, 0.0, Double.MIN_VALUE};
+		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		getContentPane().setLayout(gridBagLayout);
-		this.setSize(783,303);
+		this.setSize(850,350);
 		
 		valorHexa = new JTextField();
 		GridBagConstraints gbc_valorHexa = new GridBagConstraints();
@@ -54,15 +54,6 @@ public class ElegirTamaño extends JDialog {
 		gbc_valorHexa.gridy = 2;
 		getContentPane().add(valorHexa, gbc_valorHexa);
 		valorHexa.setColumns(10);
-		
-		
-		JButton botonColor = new JButton("boton color");
-		
-		GridBagConstraints gbc_botonColor = new GridBagConstraints();
-		gbc_botonColor.insets = new Insets(0, 0, 5, 5);
-		gbc_botonColor.gridx = 3;
-		gbc_botonColor.gridy = 0;
-		getContentPane().add(botonColor, gbc_botonColor);
 		
 		alto = new JTextField();
 		JLabel lblAlto = new JLabel("Alto");
@@ -95,6 +86,18 @@ public class ElegirTamaño extends JDialog {
 		ancho.setColumns(10);
 		
 		
+			JButton botonColor = new JButton("");
+		
+				GridBagConstraints gbc_botonColor = new GridBagConstraints();
+				gbc_botonColor.fill = GridBagConstraints.VERTICAL;
+				gbc_botonColor.insets = new Insets(0, 0, 0, 5);
+				gbc_botonColor.gridx = 3;
+				gbc_botonColor.gridy = 4;
+				getContentPane().add(botonColor, gbc_botonColor);
+				
+				
+				botonColor.setBackground(Color.BLACK);
+		
 		
 		
 		
@@ -126,9 +129,7 @@ public class ElegirTamaño extends JDialog {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				
-				if(ancho.getText()==""&&alto.getText()=="") {
-					predeterminado();
-				}
+				
 				
 				p.setImagen(new BufferedImage(Integer.parseInt
 						(ancho.getText()),Integer.parseInt
@@ -138,6 +139,22 @@ public class ElegirTamaño extends JDialog {
 				
 			}
 		});
+		
+		JButton btnPredeterminado = new JButton("Predeterminado");
+		btnPredeterminado.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				
+				p.setImagen(new BufferedImage(300,300,BufferedImage.TYPE_INT_RGB),new Color(255,255,255));
+			
+				thisRef.dispose();
+			}
+		});
+		GridBagConstraints gbc_btnPredeterminado = new GridBagConstraints();
+		gbc_btnPredeterminado.insets = new Insets(0, 0, 5, 5);
+		gbc_btnPredeterminado.gridx = 1;
+		gbc_btnPredeterminado.gridy = 3;
+		getContentPane().add(btnPredeterminado, gbc_btnPredeterminado);
 		
 		
 		
@@ -220,6 +237,9 @@ public class ElegirTamaño extends JDialog {
 		sliderAzul.setMaximum(255);
 		sliderAzul.setValue(0);
 		
+		
+		
+		
 		sliderAzul.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent arg0) {
 			
@@ -229,9 +249,6 @@ public class ElegirTamaño extends JDialog {
 			cambiaValorHex();
 		}
 	});
-		
-		
-		botonColor.setBackground(Color.WHITE);
 		
 	}
 	
@@ -245,9 +262,5 @@ public class ElegirTamaño extends JDialog {
 		
 	}
 		
-		public void predeterminado() {
-			
-			BufferedImage imagenPredet= imagenPredet=new BufferedImage(300,300,BufferedImage.TYPE_INT_RGB);
-			
-		}
+		
 }

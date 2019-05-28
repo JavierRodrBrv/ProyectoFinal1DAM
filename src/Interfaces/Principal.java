@@ -179,7 +179,7 @@ public class Principal extends JPanel{
 				
 				System.out.println(colores[0]+ "" + colores[1] +""+colores[2]);
 				
-				    imagen.setRGB(e.getX(), e.getY(), 4, 4,colores , 0, 255);
+				    imagen.setRGB(e.getX(), e.getY(), 4, 4,colores , 0, 0);
 				 
 				    lienzo.repaint();
 					repaint();
@@ -240,6 +240,20 @@ public class Principal extends JPanel{
 		return imagen;
 	}
 	
+	public void setImagenPreseterminada(BufferedImage imagen,Color color) {
+		this.imagen = imagen;
+		
+	
+		for (int i = 0; i < imagen.getWidth(); i++) {
+			for (int j = 0; j < imagen.getHeight(); j++) {
+				imagen.setRGB(i, j, color.getRGB());
+			}
+		}
+		this.lienzo.setIcon(new ImageIcon(imagen));
+		this.lienzo.repaint();
+		this.repaint();
+		ventana.repaint();
+	}
 	
 	
 	public void setImagen(BufferedImage imagen,Color color) {

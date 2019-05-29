@@ -48,7 +48,7 @@ public class Ventana extends JFrame{
 	public Ventana() {
 		super();
 		this.setTitle("Paint");
-		setSize(750,450);
+		setSize(750,490);
 		this.setLocationRelativeTo(null);
 		setIconImage(Toolkit.getDefaultToolkit().getImage("./imagenes/icono2.jpg"));
 		

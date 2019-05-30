@@ -17,6 +17,7 @@ import java.awt.Shape;
 import javax.swing.JMenuBar;
 import java.awt.SystemColor;
 import java.awt.image.BufferedImage;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -53,6 +54,7 @@ import javax.swing.Icon;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Rectangle;
+import javax.swing.border.LineBorder;
 
 public class Principal extends JPanel{
 	private Ventana ventana;
@@ -66,11 +68,9 @@ public class Principal extends JPanel{
 	private JRadioButton opPincel4px;
 	private JRadioButton opPincel6px;
 	private final ButtonGroup buttonGroup = new ButtonGroup();
-	private JButton seleccionarPincel;
-	private JButton seleccionarGoma;
 	private ArrayList<JButton> botonesColores;
-	private JButton botonVerColores;
 	private JPanel coloresGuardados;
+	private JLabel lblColoresGuardados;
 	
 	public Principal(Ventana v) {
 		
@@ -89,9 +89,9 @@ public class Principal extends JPanel{
 		add(panel, BorderLayout.EAST);
 		GridBagLayout gbl_panel = new GridBagLayout();
 		gbl_panel.columnWidths = new int[]{144, 0, 0};
-		gbl_panel.rowHeights = new int[]{47, 43, 40, 43, 0, 0, 0, 0, 39, 45, 42, 0};
+		gbl_panel.rowHeights = new int[]{47, 43, 40, 24, 60, 0, 0, 0, 39, 45, 42, 0};
 		gbl_panel.columnWeights = new double[]{1.0, 0.0, Double.MIN_VALUE};
-		gbl_panel.rowWeights = new double[]{0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_panel.rowWeights = new double[]{0.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		panel.setLayout(gbl_panel);
 		
 		
@@ -141,72 +141,94 @@ public class Principal extends JPanel{
 		sliderAzul.setMaximum(255);
 		
 
-		String valorStringColor=sliderRojo.getValue()+""+sliderVerde.getValue()+""+sliderAzul.getValue();
-		int valorColores=Integer.parseInt(valorStringColor);
+		
+		lblColoresGuardados = new JLabel("COLORES GUARDADOS");
+		GridBagConstraints gbc_lblColoresGuardados = new GridBagConstraints();
+		gbc_lblColoresGuardados.insets = new Insets(0, 0, 5, 5);
+		gbc_lblColoresGuardados.gridx = 0;
+		gbc_lblColoresGuardados.gridy = 3;
+		panel.add(lblColoresGuardados, gbc_lblColoresGuardados);
+		
+		
+		coloresGuardados = new JPanel();
+		coloresGuardados.setBorder(new LineBorder(new Color(0, 0, 0), 5, true));
+		
+		
+		botonesColores=new ArrayList<JButton>();
+        try {
+
+    		Statement selectColor=ConexionBD.crearStatement();
+			ResultSet setColor=selectColor.executeQuery("select * from colores;");
+			while(setColor.next()){
+				coloresPredefinidosBD(setColor);
+			}
+			
+		} catch (SQLException e1) {
+			
+			e1.printStackTrace();
+		}
+		
+        catch (ConexionException e1) {
+        	
+			e1.printStackTrace();
+		}
+		
+		
+		coloresGuardados.setBounds(new Rectangle(0, 0, 100, 100));
+		GridBagConstraints gbc_coloresGuardados = new GridBagConstraints();
+		gbc_coloresGuardados.insets = new Insets(0, 0, 5, 5);
+		gbc_coloresGuardados.fill = GridBagConstraints.BOTH;
+		gbc_coloresGuardados.gridx = 0;
+		gbc_coloresGuardados.gridy = 4;
+		panel.add(coloresGuardados, gbc_coloresGuardados);
+		coloresGuardados.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
 		
 		botonGuardaColores = new JButton("Guardar color");
 		
 		
-		coloresGuardados = new JPanel();
-		//Select from mitabla (todos)
-		//iterar el resultset
-		//metes cada valor en el arraylist
-		
-		//recorres todo el arraylist
-		//Para cada boton del arraylist coloresGuardados.add(arrayList.get(i))
-		coloresGuardados.setBounds(new Rectangle(0, 0, 100, 100));
-		coloresGuardados.setSize(new Dimension(100, 100));
-		GridBagConstraints gbc_coloresGuardados = new GridBagConstraints();
-		gbc_coloresGuardados.insets = new Insets(0, 0, 5, 5);
-		gbc_coloresGuardados.fill = GridBagConstraints.BOTH;
-		gbc_coloresGuardados.gridx = 0;
-		gbc_coloresGuardados.gridy = 3;
-		panel.add(coloresGuardados, gbc_coloresGuardados);
-		coloresGuardados.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		botonGuardaColores.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		GridBagConstraints gbc_botonGuardaColores1 = new GridBagConstraints();
 		gbc_botonGuardaColores1.insets = new Insets(0, 0, 5, 5);
 		gbc_botonGuardaColores1.anchor = GridBagConstraints.SOUTH;
 		gbc_botonGuardaColores1.gridx = 0;
-		gbc_botonGuardaColores1.gridy = 4;
+		gbc_botonGuardaColores1.gridy = 5;
 		panel.add(botonGuardaColores, gbc_botonGuardaColores1);
 		
-		//PENDIENTE DE VERLO NO FUNCIONA
-		/*
-		ImageIcon imagenPincel= new ImageIcon("\"./imagenes/goma.ico\"");
-		Icon iconoPincel= new ImageIcon(imagenPincel.getImage().getScaledInstance(seleccionarPincel.getWidth(), seleccionarPincel.getHeight(), Image.SCALE_DEFAULT));
-		seleccionarGoma.setIcon(iconoPincel);*/
-		
-		//PENDIENTE DE VERLO NO FUNCIONA
-		/*
-		ImageIcon imagenGoma= new ImageIcon("\"./imagenes/goma.ico\"");
-		Icon iconoGoma= new ImageIcon(imagenGoma.getImage().getScaledInstance(seleccionarGoma.getWidth(), seleccionarGoma.getHeight(), Image.SCALE_DEFAULT));
-		seleccionarGoma.setIcon(iconoGoma);
-		*/
-		
-		botonVerColores = new JButton("Ver colores");
-		botonVerColores.addMouseListener(new MouseAdapter() {
+		botonGuardaColores.addMouseListener(new MouseAdapter() {
 			@Override
-			public void mouseClicked(MouseEvent e) {
+			public void mouseClicked(MouseEvent arg0) {
 				
-				
-				
+				//insert into miTabla (int r, int g, int b)
 				try {
-					Statement consultaColores=ConexionBD.crearStatement();
+					Statement registrarColores=ConexionBD.crearStatement();
+					registrarColores.execute("insert into colores(red,green,blue) values('"+sliderRojo.getValue()+"','"+sliderVerde.getValue()+"','"+sliderAzul.getValue()+"')");
+				} catch (SQLException e) {
 					
+					e.printStackTrace();
 					
-				} catch (ConexionException ex) {
+				} catch (ConexionException e) {
 					
-					ex.printStackTrace();
+					e.printStackTrace();
+					
 				}
+				
+				JButton boton=new JButton();
+				boton.setBackground(new Color(sliderRojo.getValue(),sliderVerde.getValue(),sliderAzul.getValue()));
+				coloresGuardados.add(boton);
+				botonesColores.add(boton);
+				seleccionarColores(boton);
+				
+				coloresGuardados.setVisible(false);
+				coloresGuardados.setVisible(true);
+				
 			}
+			
 		});
-		GridBagConstraints gbc_botonVerColores = new GridBagConstraints();
-		gbc_botonVerColores.insets = new Insets(0, 0, 5, 5);
-		gbc_botonVerColores.gridx = 0;
-		gbc_botonVerColores.gridy = 5;
-		panel.add(botonVerColores, gbc_botonVerColores);
+		
+	
+			
+		
 		
 		opPincel2px = new JRadioButton("Pincel 2px");
 		buttonGroup.add(opPincel2px);
@@ -232,24 +254,6 @@ public class Principal extends JPanel{
 		gbc_opPincel6px.gridy = 8;
 		panel.add(opPincel6px, gbc_opPincel6px);
 		
-		seleccionarPincel = new JButton("");
-		GridBagConstraints gbc_seleccionarPincel = new GridBagConstraints();
-		gbc_seleccionarPincel.insets = new Insets(0, 0, 5, 5);
-		gbc_seleccionarPincel.fill = GridBagConstraints.VERTICAL;
-		gbc_seleccionarPincel.gridx = 0;
-		gbc_seleccionarPincel.gridy = 9;
-		
-				panel.add(seleccionarPincel, gbc_seleccionarPincel);
-		
-		seleccionarGoma = new JButton("");
-		GridBagConstraints gbc_seleccionarGoma = new GridBagConstraints();
-		gbc_seleccionarGoma.insets = new Insets(0, 0, 0, 5);
-		gbc_seleccionarGoma.fill = GridBagConstraints.VERTICAL;
-		gbc_seleccionarGoma.gridx = 0;
-		gbc_seleccionarGoma.gridy = 10;
-		
-		panel.add(seleccionarGoma, gbc_seleccionarGoma);
-		
 		this.setVisible(true);
 		
 		lienzo=new JLabel();
@@ -260,8 +264,6 @@ public class Principal extends JPanel{
 			
 			public void mouseDragged(MouseEvent e) {
 				
-				
-				
 				int ancho=0;
 				if(opPincel2px.isSelected()==true) {
 					ancho=2;
@@ -270,7 +272,6 @@ public class Principal extends JPanel{
 				}else if(opPincel6px.isSelected()==true) {
 					ancho=6;
 				}
-				
 				
 				int [] colores= new int[ancho*ancho];
 				for (int i = 0; i <ancho*ancho; i++) {
@@ -318,40 +319,38 @@ public class Principal extends JPanel{
 		
 		this.add(lienzo);
 		
-		botonGuardaColores.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
-				//insert into miTabla (int r, int g, int b)
-				JButton boton=new JButton();
-				boton.setBackground(new Color(sliderRojo.getValue(),sliderVerde.getValue(),sliderAzul.getValue()));
-				coloresGuardados.add(boton);
-				botonesColores.add(boton);
-
-				coloresGuardados.setVisible(false);
-				coloresGuardados.setVisible(true);
-			/*	try {
-					Statement registrarColores=ConexionBD.crearStatement();
-					//registrarColores.executeUpdate("insert into colores(numeroColores) values('"+valorColores+"')");
-					
-					
-					
-					
-				} catch (ConexionException e) {
-					e.printStackTrace();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}*/
-				
-			
-				
-			}
-		});
+		
+		
+	
+	}
+	
+	public void coloresPredefinidosBD(ResultSet color) throws SQLException {
+		
+		JButton boton=new JButton();
+		boton.setBackground(new Color(color.getInt("red"),color.getInt("green"),color.getInt("blue")));
+		coloresGuardados.add(boton);
+		botonesColores.add(boton);
+		seleccionarColores(boton);
+		
+		
 		
 	}
 	
-	 
-
-	
+	public void seleccionarColores(JButton boton) {
+		boton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				
+			int valorColorRojo=boton.getBackground().getRed();
+			int valorColorVerde=boton.getBackground().getGreen();
+			int valorColorAzul=boton.getBackground().getBlue();
+			
+			sliderRojo.setValue(valorColorRojo);
+			sliderVerde.setValue(valorColorVerde);
+			sliderAzul.setValue(valorColorAzul);
+			}
+		});
+	}
 	
 	public JLabel getLabel() {
 		return lienzo;

@@ -19,6 +19,7 @@ import java.awt.SystemColor;
 import java.awt.image.BufferedImage;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.awt.Component;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
@@ -51,6 +52,7 @@ import javax.swing.Icon;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.Rectangle;
 
 public class Principal extends JPanel{
 	private Ventana ventana;
@@ -66,7 +68,9 @@ public class Principal extends JPanel{
 	private final ButtonGroup buttonGroup = new ButtonGroup();
 	private JButton seleccionarPincel;
 	private JButton seleccionarGoma;
+	private ArrayList<JButton> botonesColores;
 	private JButton botonVerColores;
+	private JPanel coloresGuardados;
 	
 	public Principal(Ventana v) {
 		
@@ -84,22 +88,11 @@ public class Principal extends JPanel{
 		JPanel panel = new JPanel();
 		add(panel, BorderLayout.EAST);
 		GridBagLayout gbl_panel = new GridBagLayout();
-		gbl_panel.columnWidths = new int[]{144, 0};
+		gbl_panel.columnWidths = new int[]{144, 0, 0};
 		gbl_panel.rowHeights = new int[]{47, 43, 40, 43, 0, 0, 0, 0, 39, 45, 42, 0};
-		gbl_panel.columnWeights = new double[]{0.0, Double.MIN_VALUE};
-		gbl_panel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_panel.columnWeights = new double[]{1.0, 0.0, Double.MIN_VALUE};
+		gbl_panel.rowWeights = new double[]{0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		panel.setLayout(gbl_panel);
-		
-		JButton botonColor = new JButton("");
-		botonColor.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		botonColor.setMinimumSize(new Dimension(27, 9));
-		botonColor.setMaximumSize(new Dimension(20, 9));
-		GridBagConstraints gbc_botonColor = new GridBagConstraints();
-		gbc_botonColor.insets = new Insets(0, 0, 5, 0);
-		gbc_botonColor.fill = GridBagConstraints.VERTICAL;
-		gbc_botonColor.gridx = 0;
-		gbc_botonColor.gridy = 3;
-		panel.add(botonColor, gbc_botonColor);
 		
 		
 		
@@ -107,7 +100,7 @@ public class Principal extends JPanel{
 		
 		GridBagConstraints gbc_sliderRojo = new GridBagConstraints();
 		gbc_sliderRojo.fill = GridBagConstraints.BOTH;
-		gbc_sliderRojo.insets = new Insets(0, 0, 5, 0);
+		gbc_sliderRojo.insets = new Insets(0, 0, 5, 5);
 		gbc_sliderRojo.gridx = 0;
 		gbc_sliderRojo.gridy = 0;
 		panel.add(sliderRojo, gbc_sliderRojo);
@@ -118,18 +111,29 @@ public class Principal extends JPanel{
 		
 		GridBagConstraints gbc_sliderVerde = new GridBagConstraints();
 		gbc_sliderVerde.fill = GridBagConstraints.BOTH;
-		gbc_sliderVerde.insets = new Insets(0, 0, 5, 0);
+		gbc_sliderVerde.insets = new Insets(0, 0, 5, 5);
 		gbc_sliderVerde.gridx = 0;
 		gbc_sliderVerde.gridy = 1;
 		panel.add(sliderVerde, gbc_sliderVerde);
 		sliderVerde.setValue(0);
 		sliderVerde.setMaximum(255);
 		
+		JButton botonColor = new JButton("");
+		botonColor.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		botonColor.setMinimumSize(new Dimension(27, 9));
+		botonColor.setMaximumSize(new Dimension(20, 9));
+		GridBagConstraints gbc_botonColor = new GridBagConstraints();
+		gbc_botonColor.insets = new Insets(0, 0, 5, 0);
+		gbc_botonColor.fill = GridBagConstraints.VERTICAL;
+		gbc_botonColor.gridx = 1;
+		gbc_botonColor.gridy = 1;
+		panel.add(botonColor, gbc_botonColor);
+		
 		sliderAzul = new JSlider();
 		
 		GridBagConstraints gbc_sliderAzul = new GridBagConstraints();
 		gbc_sliderAzul.fill = GridBagConstraints.BOTH;
-		gbc_sliderAzul.insets = new Insets(0, 0, 5, 0);
+		gbc_sliderAzul.insets = new Insets(0, 0, 5, 5);
 		gbc_sliderAzul.gridx = 0;
 		gbc_sliderAzul.gridy = 2;
 		panel.add(sliderAzul, gbc_sliderAzul);
@@ -142,31 +146,27 @@ public class Principal extends JPanel{
 		
 		
 		botonGuardaColores = new JButton("Guardar color");
-		botonGuardaColores.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
-				
-				
-				try {
-					Statement registrarColores=ConexionBD.crearStatement();
-					registrarColores.executeUpdate("insert into colores(numeroColores) values('"+valorColores+"')");
-					
-					
-					
-					
-				} catch (ConexionException e) {
-					e.printStackTrace();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-				
-			
-				
-			}
-		});
+		
+		
+		coloresGuardados = new JPanel();
+		//Select from mitabla (todos)
+		//iterar el resultset
+		//metes cada valor en el arraylist
+		
+		//recorres todo el arraylist
+		//Para cada boton del arraylist coloresGuardados.add(arrayList.get(i))
+		coloresGuardados.setBounds(new Rectangle(0, 0, 100, 100));
+		coloresGuardados.setSize(new Dimension(100, 100));
+		GridBagConstraints gbc_coloresGuardados = new GridBagConstraints();
+		gbc_coloresGuardados.insets = new Insets(0, 0, 5, 5);
+		gbc_coloresGuardados.fill = GridBagConstraints.BOTH;
+		gbc_coloresGuardados.gridx = 0;
+		gbc_coloresGuardados.gridy = 3;
+		panel.add(coloresGuardados, gbc_coloresGuardados);
+		coloresGuardados.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		botonGuardaColores.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		GridBagConstraints gbc_botonGuardaColores1 = new GridBagConstraints();
-		gbc_botonGuardaColores1.insets = new Insets(0, 0, 5, 0);
+		gbc_botonGuardaColores1.insets = new Insets(0, 0, 5, 5);
 		gbc_botonGuardaColores1.anchor = GridBagConstraints.SOUTH;
 		gbc_botonGuardaColores1.gridx = 0;
 		gbc_botonGuardaColores1.gridy = 4;
@@ -203,7 +203,7 @@ public class Principal extends JPanel{
 			}
 		});
 		GridBagConstraints gbc_botonVerColores = new GridBagConstraints();
-		gbc_botonVerColores.insets = new Insets(0, 0, 5, 0);
+		gbc_botonVerColores.insets = new Insets(0, 0, 5, 5);
 		gbc_botonVerColores.gridx = 0;
 		gbc_botonVerColores.gridy = 5;
 		panel.add(botonVerColores, gbc_botonVerColores);
@@ -211,7 +211,7 @@ public class Principal extends JPanel{
 		opPincel2px = new JRadioButton("Pincel 2px");
 		buttonGroup.add(opPincel2px);
 		GridBagConstraints gbc_opPincel2px = new GridBagConstraints();
-		gbc_opPincel2px.insets = new Insets(0, 0, 5, 0);
+		gbc_opPincel2px.insets = new Insets(0, 0, 5, 5);
 		gbc_opPincel2px.gridx = 0;
 		gbc_opPincel2px.gridy = 6;
 		panel.add(opPincel2px, gbc_opPincel2px);
@@ -219,7 +219,7 @@ public class Principal extends JPanel{
 		opPincel4px = new JRadioButton("Pincel 4px");
 		buttonGroup.add(opPincel4px);
 		GridBagConstraints gbc_opPincel4px = new GridBagConstraints();
-		gbc_opPincel4px.insets = new Insets(0, 0, 5, 0);
+		gbc_opPincel4px.insets = new Insets(0, 0, 5, 5);
 		gbc_opPincel4px.gridx = 0;
 		gbc_opPincel4px.gridy = 7;
 		panel.add(opPincel4px, gbc_opPincel4px);
@@ -227,14 +227,14 @@ public class Principal extends JPanel{
 		opPincel6px = new JRadioButton("Pincel 6px");
 		buttonGroup.add(opPincel6px);
 		GridBagConstraints gbc_opPincel6px = new GridBagConstraints();
-		gbc_opPincel6px.insets = new Insets(0, 0, 5, 0);
+		gbc_opPincel6px.insets = new Insets(0, 0, 5, 5);
 		gbc_opPincel6px.gridx = 0;
 		gbc_opPincel6px.gridy = 8;
 		panel.add(opPincel6px, gbc_opPincel6px);
 		
 		seleccionarPincel = new JButton("");
 		GridBagConstraints gbc_seleccionarPincel = new GridBagConstraints();
-		gbc_seleccionarPincel.insets = new Insets(0, 0, 5, 0);
+		gbc_seleccionarPincel.insets = new Insets(0, 0, 5, 5);
 		gbc_seleccionarPincel.fill = GridBagConstraints.VERTICAL;
 		gbc_seleccionarPincel.gridx = 0;
 		gbc_seleccionarPincel.gridy = 9;
@@ -243,6 +243,7 @@ public class Principal extends JPanel{
 		
 		seleccionarGoma = new JButton("");
 		GridBagConstraints gbc_seleccionarGoma = new GridBagConstraints();
+		gbc_seleccionarGoma.insets = new Insets(0, 0, 0, 5);
 		gbc_seleccionarGoma.fill = GridBagConstraints.VERTICAL;
 		gbc_seleccionarGoma.gridx = 0;
 		gbc_seleccionarGoma.gridy = 10;
@@ -260,39 +261,29 @@ public class Principal extends JPanel{
 			public void mouseDragged(MouseEvent e) {
 				
 				
-				int [] colores= new int[255];
-				colores[0]=sliderRojo.getValue();
-				colores[1]=sliderVerde.getValue();
-				colores[2]=sliderAzul.getValue();
 				
-				System.out.println(colores[0]+ "" + colores[1] +""+colores[2]);
-				
-				
+				int ancho=0;
 				if(opPincel2px.isSelected()==true) {
-					
-				    imagen.setRGB(e.getX(), e.getY(), 2, 2,colores , 0, 0);
-				  
-				    lienzo.repaint();
-					repaint();
-					ventana.repaint();
-					
-				}else if(opPincel4px.isSelected()==true) {
-					
-					
-					imagen.setRGB(e.getX(), e.getY(), 4, 4,colores , 0, 0);
-					  
-				    lienzo.repaint();
-					repaint();
-					ventana.repaint();
-					
+					ancho=2;
+				}else  if(opPincel4px.isSelected()==true) {
+					ancho=4;
 				}else if(opPincel6px.isSelected()==true) {
-					imagen.setRGB(e.getX(), e.getY(), 6, 6,colores , 0, 0);
-					  
-				    lienzo.repaint();
-					repaint();
-					ventana.repaint();
-					
+					ancho=6;
 				}
+				
+				
+				int [] colores= new int[ancho*ancho];
+				for (int i = 0; i <ancho*ancho; i++) {
+					colores[i]=sliderRojo.getValue()<<16 | sliderVerde.getValue()<<8 |sliderAzul.getValue();
+				}	
+				
+				
+			    imagen.setRGB(e.getX(), e.getY(), ancho,ancho,colores , 0, 0);
+			    
+			    lienzo.repaint();
+				repaint();
+				ventana.repaint();
+					
 			}
 			
 			public void mouseMoved(MouseEvent e) {
@@ -327,6 +318,34 @@ public class Principal extends JPanel{
 		
 		this.add(lienzo);
 		
+		botonGuardaColores.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				//insert into miTabla (int r, int g, int b)
+				JButton boton=new JButton();
+				boton.setBackground(new Color(sliderRojo.getValue(),sliderVerde.getValue(),sliderAzul.getValue()));
+				coloresGuardados.add(boton);
+				botonesColores.add(boton);
+
+				coloresGuardados.setVisible(false);
+				coloresGuardados.setVisible(true);
+			/*	try {
+					Statement registrarColores=ConexionBD.crearStatement();
+					//registrarColores.executeUpdate("insert into colores(numeroColores) values('"+valorColores+"')");
+					
+					
+					
+					
+				} catch (ConexionException e) {
+					e.printStackTrace();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}*/
+				
+			
+				
+			}
+		});
 		
 	}
 	

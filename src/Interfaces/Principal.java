@@ -88,9 +88,9 @@ public class Principal extends JPanel{
 		JPanel panel = new JPanel();
 		add(panel, BorderLayout.EAST);
 		GridBagLayout gbl_panel = new GridBagLayout();
-		gbl_panel.columnWidths = new int[]{144, 0, 0};
+		gbl_panel.columnWidths = new int[]{174, 47, 0};
 		gbl_panel.rowHeights = new int[]{47, 43, 40, 24, 60, 0, 0, 0, 39, 45, 42, 0};
-		gbl_panel.columnWeights = new double[]{1.0, 0.0, Double.MIN_VALUE};
+		gbl_panel.columnWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
 		gbl_panel.rowWeights = new double[]{0.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		panel.setLayout(gbl_panel);
 		
@@ -119,12 +119,13 @@ public class Principal extends JPanel{
 		sliderVerde.setMaximum(255);
 		
 		JButton botonColor = new JButton("");
+		botonColor.setBackground(Color.BLACK);
 		botonColor.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		botonColor.setMinimumSize(new Dimension(27, 9));
 		botonColor.setMaximumSize(new Dimension(20, 9));
 		GridBagConstraints gbc_botonColor = new GridBagConstraints();
 		gbc_botonColor.insets = new Insets(0, 0, 5, 0);
-		gbc_botonColor.fill = GridBagConstraints.VERTICAL;
+		gbc_botonColor.fill = GridBagConstraints.BOTH;
 		gbc_botonColor.gridx = 1;
 		gbc_botonColor.gridy = 1;
 		panel.add(botonColor, gbc_botonColor);
@@ -182,7 +183,7 @@ public class Principal extends JPanel{
 		gbc_coloresGuardados.gridy = 4;
 		panel.add(coloresGuardados, gbc_coloresGuardados);
 		coloresGuardados.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
-		
+		coloresGuardados.setSize(25,25);
 		
 		
 		botonGuardaColores = new JButton("Guardar color");
@@ -237,6 +238,7 @@ public class Principal extends JPanel{
 		panel.add(opPincel2px, gbc_opPincel2px);
 		
 		opPincel4px = new JRadioButton("Pincel 4px");
+		opPincel4px.setSelected(true);
 		buttonGroup.add(opPincel4px);
 		GridBagConstraints gbc_opPincel4px = new GridBagConstraints();
 		gbc_opPincel4px.insets = new Insets(0, 0, 5, 5);

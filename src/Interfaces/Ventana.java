@@ -108,8 +108,7 @@ public class Ventana extends JFrame{
 			public void actionPerformed(ActionEvent arg0) {
 				 
 				JFileChooser elGuardar= new JFileChooser();
-				FileNameExtensionFilter filter=new FileNameExtensionFilter("JPEG file,GIF,PNG","jpg","gif","png");
-				elGuardar.setFileFilter(filter);
+				
 				int eleccionValor=elGuardar.showSaveDialog(null);
 				if(eleccionValor==JFileChooser.APPROVE_OPTION) {
 					File f=elGuardar.getSelectedFile();

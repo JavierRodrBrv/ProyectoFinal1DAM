@@ -66,7 +66,7 @@ public class Principal extends JPanel{
 	private JButton botonGuardaColores;
 	private JRadioButton opPincel2px;
 	private JRadioButton opPincel4px;
-	private JRadioButton opPincel6px;
+	private JRadioButton opPincel8px;
 	private final ButtonGroup buttonGroup = new ButtonGroup();
 	private ArrayList<JButton> botonesColores;
 	private JPanel coloresGuardados;
@@ -174,7 +174,7 @@ public class Principal extends JPanel{
 		}
 		
 		
-		coloresGuardados.setBounds(new Rectangle(0, 0, 100, 100));
+		coloresGuardados.setBounds(new Rectangle(0, 0, 15, 15));
 		GridBagConstraints gbc_coloresGuardados = new GridBagConstraints();
 		gbc_coloresGuardados.insets = new Insets(0, 0, 5, 5);
 		gbc_coloresGuardados.fill = GridBagConstraints.BOTH;
@@ -184,9 +184,8 @@ public class Principal extends JPanel{
 		coloresGuardados.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
 		
+		
 		botonGuardaColores = new JButton("Guardar color");
-		
-		
 		botonGuardaColores.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		GridBagConstraints gbc_botonGuardaColores1 = new GridBagConstraints();
 		gbc_botonGuardaColores1.insets = new Insets(0, 0, 5, 5);
@@ -199,7 +198,6 @@ public class Principal extends JPanel{
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				
-				//insert into miTabla (int r, int g, int b)
 				try {
 					Statement registrarColores=ConexionBD.crearStatement();
 					registrarColores.execute("insert into colores(red,green,blue) values('"+sliderRojo.getValue()+"','"+sliderVerde.getValue()+"','"+sliderAzul.getValue()+"')");
@@ -246,13 +244,13 @@ public class Principal extends JPanel{
 		gbc_opPincel4px.gridy = 7;
 		panel.add(opPincel4px, gbc_opPincel4px);
 		
-		opPincel6px = new JRadioButton("Pincel 6px");
-		buttonGroup.add(opPincel6px);
+		opPincel8px = new JRadioButton("Pincel 8px");
+		buttonGroup.add(opPincel8px);
 		GridBagConstraints gbc_opPincel6px = new GridBagConstraints();
 		gbc_opPincel6px.insets = new Insets(0, 0, 5, 5);
 		gbc_opPincel6px.gridx = 0;
 		gbc_opPincel6px.gridy = 8;
-		panel.add(opPincel6px, gbc_opPincel6px);
+		panel.add(opPincel8px, gbc_opPincel6px);
 		
 		this.setVisible(true);
 		
@@ -269,8 +267,8 @@ public class Principal extends JPanel{
 					ancho=2;
 				}else  if(opPincel4px.isSelected()==true) {
 					ancho=4;
-				}else if(opPincel6px.isSelected()==true) {
-					ancho=6;
+				}else if(opPincel8px.isSelected()==true) {
+					ancho=8;
 				}
 				
 				int [] colores= new int[ancho*ancho];

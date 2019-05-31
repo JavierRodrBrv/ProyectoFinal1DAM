@@ -83,19 +83,15 @@ public class Principal extends JPanel{
 		JPanel panelHerramientas = new JPanel();
 		add(panelHerramientas, BorderLayout.EAST);
 		GridBagLayout gbl_panelHerramientas = new GridBagLayout();
-		gbl_panelHerramientas.columnWidths = new int[]{174, 27, 0};
+		gbl_panelHerramientas.columnWidths = new int[]{174, 53, 0};
 		gbl_panelHerramientas.rowHeights = new int[]{47, 43, 40, 24, 60, 0, 0, 0, 39, 45, 42, 0};
 		gbl_panelHerramientas.columnWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
-		gbl_panelHerramientas.rowWeights = new double[]{0.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_panelHerramientas.rowWeights = new double[]{1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		panelHerramientas.setLayout(gbl_panelHerramientas);
-		panelHerramientas.setSize(25,25);
-		panelHerramientas.setMinimumSize(panelHerramientas.getSize());
-		panelHerramientas.setMaximumSize(panelHerramientas.getSize());
-		
 		
 		sliderRojo = new JSlider();
 		GridBagConstraints gbc_sliderRojo = new GridBagConstraints();
-		gbc_sliderRojo.fill = GridBagConstraints.BOTH;
+		gbc_sliderRojo.fill = GridBagConstraints.HORIZONTAL;
 		gbc_sliderRojo.insets = new Insets(0, 0, 5, 5);
 		gbc_sliderRojo.gridx = 0;
 		gbc_sliderRojo.gridy = 0;
@@ -104,7 +100,6 @@ public class Principal extends JPanel{
 		sliderRojo.setMaximum(255);
 		
 		sliderVerde = new JSlider();
-		
 		GridBagConstraints gbc_sliderVerde = new GridBagConstraints();
 		gbc_sliderVerde.fill = GridBagConstraints.BOTH;
 		gbc_sliderVerde.insets = new Insets(0, 0, 5, 5);
@@ -121,7 +116,7 @@ public class Principal extends JPanel{
 		botonColor.setMaximumSize(new Dimension(20, 9));
 		GridBagConstraints gbc_botonColor = new GridBagConstraints();
 		gbc_botonColor.insets = new Insets(0, 0, 5, 0);
-		gbc_botonColor.fill = GridBagConstraints.BOTH;
+		gbc_botonColor.fill = GridBagConstraints.VERTICAL;
 		gbc_botonColor.gridx = 1;
 		gbc_botonColor.gridy = 1;
 		panelHerramientas.add(botonColor, gbc_botonColor);
@@ -178,11 +173,10 @@ public class Principal extends JPanel{
 		gbc_coloresGuardados.gridx = 0;
 		gbc_coloresGuardados.gridy = 4;
 		panelHerramientas.add(coloresGuardados, gbc_coloresGuardados);
+		coloresGuardados.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		coloresGuardados.setSize(25,25);
 		coloresGuardados.setMinimumSize(coloresGuardados.getSize());
 		coloresGuardados.setMaximumSize(coloresGuardados.getSize());
-		coloresGuardados.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
-		
 		
 		
 		botonGuardaColores = new JButton("Guardar color");

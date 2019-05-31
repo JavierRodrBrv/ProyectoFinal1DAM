@@ -59,18 +59,13 @@ import javax.swing.border.LineBorder;
 public class Principal extends JPanel{
 	private Ventana ventana;
 	private BufferedImage imagen;
-	private JLabel lienzo;
-	private JSlider sliderRojo;
-	private JSlider sliderVerde;
-	private JSlider sliderAzul;
-	private JButton botonGuardaColores;
-	private JRadioButton opPincel2px;
-	private JRadioButton opPincel4px;
-	private JRadioButton opPincel8px;
+	private JLabel lienzo,lblColoresGuardados;
+	private JSlider sliderRojo,sliderVerde,sliderAzul; //Aqui estan los slider de colores que he creado
+	private JButton botonGuardaColores,btnLimpiarColores; //Botones donde guarda colores y lo limpia tanto en base de datos como en el programa.
+	private JRadioButton opPincel2px,opPincel4px,opPincel8px; //La seleccion de la anchura de los pixeles
 	private final ButtonGroup buttonGroup = new ButtonGroup();
-	private ArrayList<JButton> botonesColores;
-	private JPanel coloresGuardados;
-	private JLabel lblColoresGuardados;
+	private ArrayList<JButton> botonesColores; //Este es el ArrayList que he utilizado para ingresarle los valores a los botones.
+	private JPanel coloresGuardados; 
 	
 	public Principal(Ventana v) {
 		
@@ -85,25 +80,26 @@ public class Principal extends JPanel{
 		setLayout(new BorderLayout(0, 0));
 		
 		
-		JPanel panel = new JPanel();
-		add(panel, BorderLayout.EAST);
-		GridBagLayout gbl_panel = new GridBagLayout();
-		gbl_panel.columnWidths = new int[]{174, 47, 0};
-		gbl_panel.rowHeights = new int[]{47, 43, 40, 24, 60, 0, 0, 0, 39, 45, 42, 0};
-		gbl_panel.columnWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
-		gbl_panel.rowWeights = new double[]{0.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
-		panel.setLayout(gbl_panel);
-		
+		JPanel panelHerramientas = new JPanel();
+		add(panelHerramientas, BorderLayout.EAST);
+		GridBagLayout gbl_panelHerramientas = new GridBagLayout();
+		gbl_panelHerramientas.columnWidths = new int[]{174, 27, 0};
+		gbl_panelHerramientas.rowHeights = new int[]{47, 43, 40, 24, 60, 0, 0, 0, 39, 45, 42, 0};
+		gbl_panelHerramientas.columnWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
+		gbl_panelHerramientas.rowWeights = new double[]{0.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		panelHerramientas.setLayout(gbl_panelHerramientas);
+		panelHerramientas.setSize(25,25);
+		panelHerramientas.setMinimumSize(panelHerramientas.getSize());
+		panelHerramientas.setMaximumSize(panelHerramientas.getSize());
 		
 		
 		sliderRojo = new JSlider();
-		
 		GridBagConstraints gbc_sliderRojo = new GridBagConstraints();
 		gbc_sliderRojo.fill = GridBagConstraints.BOTH;
 		gbc_sliderRojo.insets = new Insets(0, 0, 5, 5);
 		gbc_sliderRojo.gridx = 0;
 		gbc_sliderRojo.gridy = 0;
-		panel.add(sliderRojo, gbc_sliderRojo);
+		panelHerramientas.add(sliderRojo, gbc_sliderRojo);
 		sliderRojo.setValue(0);
 		sliderRojo.setMaximum(255);
 		
@@ -114,13 +110,13 @@ public class Principal extends JPanel{
 		gbc_sliderVerde.insets = new Insets(0, 0, 5, 5);
 		gbc_sliderVerde.gridx = 0;
 		gbc_sliderVerde.gridy = 1;
-		panel.add(sliderVerde, gbc_sliderVerde);
+		panelHerramientas.add(sliderVerde, gbc_sliderVerde);
 		sliderVerde.setValue(0);
 		sliderVerde.setMaximum(255);
 		
 		JButton botonColor = new JButton("");
 		botonColor.setBackground(Color.BLACK);
-		botonColor.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		botonColor.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
 		botonColor.setMinimumSize(new Dimension(27, 9));
 		botonColor.setMaximumSize(new Dimension(20, 9));
 		GridBagConstraints gbc_botonColor = new GridBagConstraints();
@@ -128,7 +124,7 @@ public class Principal extends JPanel{
 		gbc_botonColor.fill = GridBagConstraints.BOTH;
 		gbc_botonColor.gridx = 1;
 		gbc_botonColor.gridy = 1;
-		panel.add(botonColor, gbc_botonColor);
+		panelHerramientas.add(botonColor, gbc_botonColor);
 		
 		sliderAzul = new JSlider();
 		
@@ -137,7 +133,7 @@ public class Principal extends JPanel{
 		gbc_sliderAzul.insets = new Insets(0, 0, 5, 5);
 		gbc_sliderAzul.gridx = 0;
 		gbc_sliderAzul.gridy = 2;
-		panel.add(sliderAzul, gbc_sliderAzul);
+		panelHerramientas.add(sliderAzul, gbc_sliderAzul);
 		sliderAzul.setValue(0);
 		sliderAzul.setMaximum(255);
 		
@@ -148,12 +144,11 @@ public class Principal extends JPanel{
 		gbc_lblColoresGuardados.insets = new Insets(0, 0, 5, 5);
 		gbc_lblColoresGuardados.gridx = 0;
 		gbc_lblColoresGuardados.gridy = 3;
-		panel.add(lblColoresGuardados, gbc_lblColoresGuardados);
+		panelHerramientas.add(lblColoresGuardados, gbc_lblColoresGuardados);
 		
 		
 		coloresGuardados = new JPanel();
 		coloresGuardados.setBorder(new LineBorder(new Color(0, 0, 0), 5, true));
-		
 		
 		botonesColores=new ArrayList<JButton>();
         try {
@@ -177,13 +172,17 @@ public class Principal extends JPanel{
 		
 		coloresGuardados.setBounds(new Rectangle(0, 0, 15, 15));
 		GridBagConstraints gbc_coloresGuardados = new GridBagConstraints();
+		gbc_coloresGuardados.gridwidth = 2;
 		gbc_coloresGuardados.insets = new Insets(0, 0, 5, 5);
 		gbc_coloresGuardados.fill = GridBagConstraints.BOTH;
 		gbc_coloresGuardados.gridx = 0;
 		gbc_coloresGuardados.gridy = 4;
-		panel.add(coloresGuardados, gbc_coloresGuardados);
-		coloresGuardados.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		panelHerramientas.add(coloresGuardados, gbc_coloresGuardados);
 		coloresGuardados.setSize(25,25);
+		coloresGuardados.setMinimumSize(coloresGuardados.getSize());
+		coloresGuardados.setMaximumSize(coloresGuardados.getSize());
+		coloresGuardados.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		
 		
 		
 		botonGuardaColores = new JButton("Guardar color");
@@ -193,7 +192,7 @@ public class Principal extends JPanel{
 		gbc_botonGuardaColores1.anchor = GridBagConstraints.SOUTH;
 		gbc_botonGuardaColores1.gridx = 0;
 		gbc_botonGuardaColores1.gridy = 5;
-		panel.add(botonGuardaColores, gbc_botonGuardaColores1);
+		panelHerramientas.add(botonGuardaColores, gbc_botonGuardaColores1);
 		
 		botonGuardaColores.addMouseListener(new MouseAdapter() {
 			@Override
@@ -209,7 +208,7 @@ public class Principal extends JPanel{
 				} catch (ConexionException e) {
 					
 					e.printStackTrace();
-					
+				
 				}
 				
 				JButton boton=new JButton();
@@ -225,6 +224,39 @@ public class Principal extends JPanel{
 			
 		});
 		
+		btnLimpiarColores = new JButton("Limpiar colores");
+		btnLimpiarColores.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				
+				try {
+					Statement limpiarColores=ConexionBD.crearStatement();
+					
+					 // Usamos TRUNCATE
+				    String borrar = "TRUNCATE colores";
+				    // Ejecutamos el TRUNCATE
+				    limpiarColores.executeUpdate(borrar);
+				    coloresGuardados.removeAll();
+				    coloresGuardados.setVisible(false);
+					coloresGuardados.setVisible(true);
+				    coloresGuardados.repaint();
+					limpiarColores.close();
+				} catch (ConexionException e) {
+					
+					e.printStackTrace();
+				} catch (SQLException e) {
+					
+					e.printStackTrace();
+				}
+				
+			}
+		});
+		GridBagConstraints gbc_btnLimpiarColores = new GridBagConstraints();
+		gbc_btnLimpiarColores.insets = new Insets(0, 0, 5, 5);
+		gbc_btnLimpiarColores.gridx = 0;
+		gbc_btnLimpiarColores.gridy = 6;
+		panelHerramientas.add(btnLimpiarColores, gbc_btnLimpiarColores);
+		
 	
 			
 		
@@ -234,8 +266,8 @@ public class Principal extends JPanel{
 		GridBagConstraints gbc_opPincel2px = new GridBagConstraints();
 		gbc_opPincel2px.insets = new Insets(0, 0, 5, 5);
 		gbc_opPincel2px.gridx = 0;
-		gbc_opPincel2px.gridy = 6;
-		panel.add(opPincel2px, gbc_opPincel2px);
+		gbc_opPincel2px.gridy = 7;
+		panelHerramientas.add(opPincel2px, gbc_opPincel2px);
 		
 		opPincel4px = new JRadioButton("Pincel 4px");
 		opPincel4px.setSelected(true);
@@ -243,16 +275,16 @@ public class Principal extends JPanel{
 		GridBagConstraints gbc_opPincel4px = new GridBagConstraints();
 		gbc_opPincel4px.insets = new Insets(0, 0, 5, 5);
 		gbc_opPincel4px.gridx = 0;
-		gbc_opPincel4px.gridy = 7;
-		panel.add(opPincel4px, gbc_opPincel4px);
+		gbc_opPincel4px.gridy = 8;
+		panelHerramientas.add(opPincel4px, gbc_opPincel4px);
 		
 		opPincel8px = new JRadioButton("Pincel 8px");
 		buttonGroup.add(opPincel8px);
 		GridBagConstraints gbc_opPincel6px = new GridBagConstraints();
 		gbc_opPincel6px.insets = new Insets(0, 0, 5, 5);
 		gbc_opPincel6px.gridx = 0;
-		gbc_opPincel6px.gridy = 8;
-		panel.add(opPincel8px, gbc_opPincel6px);
+		gbc_opPincel6px.gridy = 9;
+		panelHerramientas.add(opPincel8px, gbc_opPincel6px);
 		
 		this.setVisible(true);
 		

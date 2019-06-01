@@ -83,10 +83,10 @@ public class Principal extends JPanel{
 		JPanel panelHerramientas = new JPanel();
 		add(panelHerramientas, BorderLayout.EAST);
 		GridBagLayout gbl_panelHerramientas = new GridBagLayout();
-		gbl_panelHerramientas.columnWidths = new int[]{174, 53, 0};
+		gbl_panelHerramientas.columnWidths = new int[]{174, 32, 0};
 		gbl_panelHerramientas.rowHeights = new int[]{47, 43, 40, 24, 60, 0, 0, 0, 39, 45, 42, 0};
 		gbl_panelHerramientas.columnWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
-		gbl_panelHerramientas.rowWeights = new double[]{1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_panelHerramientas.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		panelHerramientas.setLayout(gbl_panelHerramientas);
 		
 		sliderRojo = new JSlider();

@@ -2,28 +2,14 @@ package Interfaces;
 
 import javax.swing.JPanel;
 import java.awt.FlowLayout;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.Color;
 import java.awt.BorderLayout;
-import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
-
-import java.awt.Panel;
-import java.awt.Point;
-import java.awt.RenderingHints;
-import java.awt.Shape;
-
-import javax.swing.JMenuBar;
-import java.awt.SystemColor;
 import java.awt.image.BufferedImage;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.awt.Component;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
 import java.awt.GridBagLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -33,12 +19,9 @@ import java.awt.Insets;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
-import java.awt.geom.Line2D;
 import javax.swing.SwingConstants;
 import javax.swing.JSlider;
 import java.awt.Dimension;
-import java.awt.GridLayout;
-import java.awt.Image;
 
 import javax.swing.event.ChangeListener;
 
@@ -49,10 +32,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.JRadioButton;
 import java.awt.Cursor;
 import javax.swing.ButtonGroup;
-import javax.swing.Icon;
 
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 import java.awt.Rectangle;
 import javax.swing.border.LineBorder;
 
@@ -63,24 +43,19 @@ public class Principal extends JPanel{
 	private JSlider sliderRojo,sliderVerde,sliderAzul; //Aqui estan los slider de colores que he creado
 	private JButton botonGuardaColores,btnLimpiarColores; //Botones donde guarda colores y lo limpia tanto en base de datos como en el programa.
 	private JRadioButton opPincel2px,opPincel4px,opPincel8px; //La seleccion de la anchura de los pixeles
-	private final ButtonGroup buttonGroup = new ButtonGroup();
+	private final ButtonGroup conjuntoOpciones;
 	private ArrayList<JButton> botonesColores; //Este es el ArrayList que he utilizado para ingresarle los valores a los botones.
 	private JPanel coloresGuardados; 
 	
 	public Principal(Ventana v) {
 		
 		super();
-		
 		this.ventana=v;
-		
 		setBackground(new Color(204, 204, 255));
-		
-		
-		
 		setLayout(new BorderLayout(0, 0));
 		
 		
-		JPanel panelHerramientas = new JPanel();
+		JPanel panelHerramientas = new JPanel();//Este panel contiene las herramientas para pintar 
 		add(panelHerramientas, BorderLayout.EAST);
 		GridBagLayout gbl_panelHerramientas = new GridBagLayout();
 		gbl_panelHerramientas.columnWidths = new int[]{174, 32, 0};
@@ -89,7 +64,7 @@ public class Principal extends JPanel{
 		gbl_panelHerramientas.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		panelHerramientas.setLayout(gbl_panelHerramientas);
 		
-		sliderRojo = new JSlider();
+		sliderRojo = new JSlider();//Este slider trata de dar valor/color rojo al pincel
 		GridBagConstraints gbc_sliderRojo = new GridBagConstraints();
 		gbc_sliderRojo.fill = GridBagConstraints.HORIZONTAL;
 		gbc_sliderRojo.insets = new Insets(0, 0, 5, 5);
@@ -99,7 +74,7 @@ public class Principal extends JPanel{
 		sliderRojo.setValue(0);
 		sliderRojo.setMaximum(255);
 		
-		sliderVerde = new JSlider();
+		sliderVerde = new JSlider();//Este slider trata de dar valor/color verde al pincel
 		GridBagConstraints gbc_sliderVerde = new GridBagConstraints();
 		gbc_sliderVerde.fill = GridBagConstraints.BOTH;
 		gbc_sliderVerde.insets = new Insets(0, 0, 5, 5);
@@ -109,7 +84,17 @@ public class Principal extends JPanel{
 		sliderVerde.setValue(0);
 		sliderVerde.setMaximum(255);
 		
-		JButton botonColor = new JButton("");
+		sliderAzul = new JSlider();//Este slider trata de dar valor/color azul al pincel
+		GridBagConstraints gbc_sliderAzul = new GridBagConstraints();
+		gbc_sliderAzul.fill = GridBagConstraints.BOTH;
+		gbc_sliderAzul.insets = new Insets(0, 0, 5, 5);
+		gbc_sliderAzul.gridx = 0;
+		gbc_sliderAzul.gridy = 2;
+		panelHerramientas.add(sliderAzul, gbc_sliderAzul);
+		sliderAzul.setValue(0);
+		sliderAzul.setMaximum(255);
+		
+		JButton botonColor = new JButton("");//La funcionalidad de este boton es mostrar en que color esta el pincel actualmente
 		botonColor.setBackground(Color.BLACK);
 		botonColor.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
 		botonColor.setMinimumSize(new Dimension(27, 9));
@@ -121,20 +106,11 @@ public class Principal extends JPanel{
 		gbc_botonColor.gridy = 1;
 		panelHerramientas.add(botonColor, gbc_botonColor);
 		
-		sliderAzul = new JSlider();
 		
-		GridBagConstraints gbc_sliderAzul = new GridBagConstraints();
-		gbc_sliderAzul.fill = GridBagConstraints.BOTH;
-		gbc_sliderAzul.insets = new Insets(0, 0, 5, 5);
-		gbc_sliderAzul.gridx = 0;
-		gbc_sliderAzul.gridy = 2;
-		panelHerramientas.add(sliderAzul, gbc_sliderAzul);
-		sliderAzul.setValue(0);
-		sliderAzul.setMaximum(255);
 		
 
 		
-		lblColoresGuardados = new JLabel("COLORES GUARDADOS");
+		lblColoresGuardados = new JLabel("COLORES GUARDADOS");//Este label muestra el titulo del panel
 		GridBagConstraints gbc_lblColoresGuardados = new GridBagConstraints();
 		gbc_lblColoresGuardados.insets = new Insets(0, 0, 5, 5);
 		gbc_lblColoresGuardados.gridx = 0;
@@ -142,7 +118,7 @@ public class Principal extends JPanel{
 		panelHerramientas.add(lblColoresGuardados, gbc_lblColoresGuardados);
 		
 		
-		coloresGuardados = new JPanel();
+		coloresGuardados = new JPanel();//Este panel muestra los colores almacenados
 		coloresGuardados.setBorder(new LineBorder(new Color(0, 0, 0), 5, true));
 		
 		botonesColores=new ArrayList<JButton>();
@@ -179,7 +155,7 @@ public class Principal extends JPanel{
 		coloresGuardados.setMaximumSize(coloresGuardados.getSize());
 		
 		
-		botonGuardaColores = new JButton("Guardar color");
+		botonGuardaColores = new JButton("Guardar color");//Este boton guarda los colores tanto en la base de datos como en el programa
 		botonGuardaColores.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		GridBagConstraints gbc_botonGuardaColores1 = new GridBagConstraints();
 		gbc_botonGuardaColores1.insets = new Insets(0, 0, 5, 5);
@@ -252,28 +228,27 @@ public class Principal extends JPanel{
 		panelHerramientas.add(btnLimpiarColores, gbc_btnLimpiarColores);
 		
 	
-			
+		conjuntoOpciones= new ButtonGroup();//Grupo donde recoge los RadioButtons
 		
-		
-		opPincel2px = new JRadioButton("Pincel 2px");
-		buttonGroup.add(opPincel2px);
+		opPincel2px = new JRadioButton("Pincel 2px");//En este RadioButton seleccionamos de que el pincel tenga una anchura de 2px
+		conjuntoOpciones.add(opPincel2px);
 		GridBagConstraints gbc_opPincel2px = new GridBagConstraints();
 		gbc_opPincel2px.insets = new Insets(0, 0, 5, 5);
 		gbc_opPincel2px.gridx = 0;
 		gbc_opPincel2px.gridy = 7;
 		panelHerramientas.add(opPincel2px, gbc_opPincel2px);
 		
-		opPincel4px = new JRadioButton("Pincel 4px");
+		opPincel4px = new JRadioButton("Pincel 4px");//En este RadioButton seleccionamos de que el pincel tenga una anchura de 4px
 		opPincel4px.setSelected(true);
-		buttonGroup.add(opPincel4px);
+		conjuntoOpciones.add(opPincel4px);
 		GridBagConstraints gbc_opPincel4px = new GridBagConstraints();
 		gbc_opPincel4px.insets = new Insets(0, 0, 5, 5);
 		gbc_opPincel4px.gridx = 0;
 		gbc_opPincel4px.gridy = 8;
 		panelHerramientas.add(opPincel4px, gbc_opPincel4px);
 		
-		opPincel8px = new JRadioButton("Pincel 8px");
-		buttonGroup.add(opPincel8px);
+		opPincel8px = new JRadioButton("Pincel 8px");//En este RadioButton seleccionamos de que el pincel tenga una anchura de 8px
+		conjuntoOpciones.add(opPincel8px);
 		GridBagConstraints gbc_opPincel6px = new GridBagConstraints();
 		gbc_opPincel6px.insets = new Insets(0, 0, 5, 5);
 		gbc_opPincel6px.gridx = 0;
@@ -282,13 +257,13 @@ public class Principal extends JPanel{
 		
 		this.setVisible(true);
 		
-		lienzo=new JLabel();
+		lienzo=new JLabel();//Este es el lienzo en el que se va a pintar
 		lienzo.setVerticalAlignment(SwingConstants.TOP);
 		lienzo.addMouseMotionListener(new MouseMotionAdapter() {
 			
 			
 			
-			public void mouseDragged(MouseEvent e) {
+			public void mouseDragged(MouseEvent e) {//Con este evento podemos dibujar lineas libres por el lienzo
 				
 				int ancho=0;
 				if(opPincel2px.isSelected()==true) {
@@ -298,22 +273,23 @@ public class Principal extends JPanel{
 				}else if(opPincel8px.isSelected()==true) {
 					ancho=8;
 				}
+				//La formula para que un pincel reciba el color prometido es la siguiente:
 				
-				int [] colores= new int[ancho*ancho];
+				int [] colores= new int[ancho*ancho];//El array tiene que estar ocupado por el maximo de pixeles que pueda rellenarse
 				for (int i = 0; i <ancho*ancho; i++) {
-					colores[i]=sliderRojo.getValue()<<16 | sliderVerde.getValue()<<8 |sliderAzul.getValue();
+					colores[i]=sliderRojo.getValue()<<16 | sliderVerde.getValue()<<8 |sliderAzul.getValue();//Hace falta desplazar los valores de los sliders rojo 
+																											//y verde ya que sería asi: 255(ROJO) 255(Verde 255 Azul. 
+																											//Al azul no hace falta desplazarlo ya que esta en la ultima posicion.
 				}	
-				
-				
+				lienzo.setText("X="+e.getX()+", Y="+e.getY());  
 			    imagen.setRGB(e.getX(), e.getY(), ancho,ancho,colores , 0, 0);
-			    
 			    lienzo.repaint();
 				repaint();
 				ventana.repaint();
 					
 			}
 			
-			public void mouseMoved(MouseEvent e) {
+			public void mouseMoved(MouseEvent e) {//En este evento marca en que coordenadas esta situado el puntero.
 				
 				lienzo.setText("X="+e.getX()+", Y="+e.getY());  
 			}
@@ -322,21 +298,21 @@ public class Principal extends JPanel{
 			
 		});
 		
-		sliderRojo.addChangeListener(new ChangeListener() {
+		sliderRojo.addChangeListener(new ChangeListener() {//Este slider rojo recoge los valores para aplicarselos al boton.
 			public void stateChanged(ChangeEvent arg0) {
 
 				botonColor.setBackground(new Color(sliderRojo.getValue(),sliderVerde.getValue(),sliderAzul.getValue()));
 			}
 		});
 		
-		sliderVerde.addChangeListener(new ChangeListener() {
+		sliderVerde.addChangeListener(new ChangeListener() {//Este slider verde recoge los valores para aplicarselos al boton.
 			public void stateChanged(ChangeEvent e) {
 
 				botonColor.setBackground(new Color(sliderRojo.getValue(),sliderVerde.getValue(),sliderAzul.getValue()));
 			}
 		});
 		
-		sliderAzul.addChangeListener(new ChangeListener() {
+		sliderAzul.addChangeListener(new ChangeListener() {//Este slider azul recoge los valores para aplicarselos al boton.
 			public void stateChanged(ChangeEvent e) {
 
 				botonColor.setBackground(new Color(sliderRojo.getValue(),sliderVerde.getValue(),sliderAzul.getValue()));
@@ -349,7 +325,11 @@ public class Principal extends JPanel{
 		
 	
 	}
-	
+	/**
+	 * Esta funcion trata de agregar los valores a los botones que se crean dinamicamente.
+	 * @param color lo envia por parametro para agregarlo al boton
+	 * @throws SQLException la excepcion de la base de datos.
+	 */
 	public void coloresPredefinidosBD(ResultSet color) throws SQLException {
 		
 		JButton boton=new JButton();
@@ -362,6 +342,10 @@ public class Principal extends JPanel{
 		
 	}
 	
+	/**
+	 * Esta funcion trata de que clickando un boton se seleccione el color.
+	 * @param boton  se le pasa por parametros los botones creados dinamicamente.
+	 */
 	public void seleccionarColores(JButton boton) {
 		boton.addMouseListener(new MouseAdapter() {
 			@Override
@@ -394,10 +378,17 @@ public class Principal extends JPanel{
 		return imagen;
 	}
 	
+	/**
+	 * En esta funcion es donde creamos nuestro lienzo predeterminado para que el usuario no tenga que introducir nada.
+	 * @param imagen Es donde pasamos la imagen por parametros para crear el lienzo
+	 * @param color Es donde le pasamos el color anteriormente introducido.
+	 */
 	public void setImagenPreseterminada(BufferedImage imagen,Color color) {
 		this.imagen = imagen;
 		
-	
+
+		//Aqui es donde cambiamos el color del lienzo cuando lo creamos.
+		
 		for (int i = 0; i < imagen.getWidth(); i++) {
 			for (int j = 0; j < imagen.getHeight(); j++) {
 				imagen.setRGB(i, j, color.getRGB());
@@ -409,7 +400,11 @@ public class Principal extends JPanel{
 		ventana.repaint();
 	}
 	
-	
+	/**
+	 * En esta funcion es donde creamos nuestro lienzo personalizado.
+	 * @param imagen Es donde pasamos la imagen por parametros para crear el lienzo
+	 * @param color Es donde le pasamos el color anteriormente introducido.
+	 */
 	public void setImagen(BufferedImage imagen,Color color) {
 		this.imagen = imagen;
 		
@@ -426,18 +421,21 @@ public class Principal extends JPanel{
 		ventana.repaint();
 	}
 	
+	/**
+	 * En esta funcion trata de que se pueda abrir una imagen de nuestro PC
+	 * @param imagen	Le pasamos por parametros la imagen.
+	 */
 	public void abrirImagen(BufferedImage imagen) {
 		this.imagen = imagen;
-		
-	
-		
 		this.lienzo.setIcon(new ImageIcon(imagen));
 		this.lienzo.repaint();
 		this.repaint();
 		ventana.repaint();
 	}
 	
-	
+	/**
+	 * Esta funcion borra el lienzo entero.
+	 */
 	public void borrar() {
 		lienzo.setIcon(null);
 		this.lienzo.repaint();

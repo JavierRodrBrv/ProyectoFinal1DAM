@@ -1,48 +1,36 @@
 package Interfaces;
 
 import javax.imageio.ImageIO;
-import javax.imageio.stream.ImageOutputStream;
-import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import Conexiones.ConexionBD;
 import Excepciones.ConexionException;
 
 import java.awt.SystemColor;
-import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Cursor;
-import java.awt.Font;
-import java.awt.event.ItemListener;
 import java.awt.image.BufferedImage;
-import java.awt.image.RenderedImage;
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
-import java.awt.event.ItemEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Toolkit;
 
-
+/**
+ * Esta clase modela lo que es una ventana del programa
+ * @author Javier Rodriguez
+ *
+ */
 
 public class Ventana extends JFrame{
-	private Principal principal;
-	private File archivoCogido;
-	private BufferedImage imagen;
-	private ElegirTamaño et;
+	private Principal principal;//Este es el lienzo principal (PANEL)
+	private File archivoCogido;//Tipo file para abrir alguna imagen
+	private ElegirTamaño et;//Es el JDialog de la clase ElegirTamaño
 	
 	
 	public Ventana() {
@@ -66,11 +54,11 @@ public class Ventana extends JFrame{
 		menuBar.setBackground(SystemColor.inactiveCaptionBorder);
 		setJMenuBar(menuBar);
 		
-		JMenu mnArchivo = new JMenu("Archivo");
+		JMenu mnArchivo = new JMenu("Archivo");//Es el menu que contiene varias opciones
 		mnArchivo.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		menuBar.add(mnArchivo);
 		
-		JMenuItem mntmAbrir = new JMenuItem("Abrir");
+		JMenuItem mntmAbrir = new JMenuItem("Abrir");//Esta opción nos permite abrir una imagen
 		mntmAbrir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
@@ -103,7 +91,7 @@ public class Ventana extends JFrame{
 		mntmAbrir.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		mnArchivo.add(mntmAbrir);
 		
-		JMenuItem mntmGuardar = new JMenuItem("Guardar");
+		JMenuItem mntmGuardar = new JMenuItem("Guardar");//Esta opción nos permite guardar una imagen
 		mntmGuardar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				 
@@ -127,7 +115,7 @@ public class Ventana extends JFrame{
 		mntmGuardar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		mnArchivo.add(mntmGuardar);
 		
-		JMenuItem mntmSalir = new JMenuItem("Salir");
+		JMenuItem mntmSalir = new JMenuItem("Salir");//Esta opcion nos permite salirnos del programa y cortar su ejecución.
 		mntmSalir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.exit(0);
@@ -136,11 +124,11 @@ public class Ventana extends JFrame{
 		mntmSalir.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		mnArchivo.add(mntmSalir);
 		
-		JMenu mnOpciones = new JMenu("Opciones");
+		JMenu mnOpciones = new JMenu("Opciones");//Este menu que contiene las opciones del lienzo.
 		mnOpciones.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		menuBar.add(mnOpciones);
 		
-		JMenuItem mntmCrear = new JMenuItem("Crear");
+		JMenuItem mntmCrear = new JMenuItem("Crear");//Esta opcion permite crear un lienzo.
 		mntmCrear.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		mntmCrear.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -150,7 +138,7 @@ public class Ventana extends JFrame{
 		});
 		mnOpciones.add(mntmCrear);
 		
-		JMenuItem mntmBorrar = new JMenuItem("Borrar");
+		JMenuItem mntmBorrar = new JMenuItem("Borrar");//Esta opcion permite borrar el lienzo.
 		mntmBorrar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		mntmBorrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
